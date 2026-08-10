@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "las-mejores-cafeteras-italianas",
+    "title": "Las Mejores Cafeteras Italianas",
+    "shortTitle": "Cafeteras Italianas",
+    "intro": "Las cafeteras italianas (o moka) son un método clásico para preparar café espresso en casa. Funcionan con presión de vapor y constan de tres partes: base (agua), filtro (café molido) y recolector (café preparado).",
+    "pros": [
+      "Café intenso y aromático, similar al espresso.",
+      "Fácil de usar y económica en comparación con máquinas de espresso.",
+      "Duradera (especialmente las de acero inoxidable).",
+      "No necesita electricidad, ideal para camping o apagones."
+    ],
+    "cons": [
+      "Requiere supervisión, ya que el café puede quemarse si se deja demasiado tiempo.",
+      "No produce crema como una máquina de espresso.",
+      "Puede dejar residuos si no se limpia bien.",
+      "Funciona mejor con molienda específica, no cualquier tipo de café molido."
+    ]
+  },
+  {
+    "slug": "las-mejores-cafeteras-express",
+    "title": "Las Mejores Cafeteras Express",
+    "shortTitle": "Cafeteras Express",
+    "intro": "Las cafeteras express están diseñadas para preparar café de alta calidad con presión de agua (generalmente 9 bares o más). Pueden ser automáticas, semiautomáticas o manuales y producen un espresso con cuerpo, aroma y crema característicos.",
+    "pros": [
+      "Café de alta calidad, con crema y sabor intenso.",
+      "Personalización: puedes ajustar la molienda, la presión y la cantidad de agua.",
+      "Opciones para espumar leche, ideales para cappuccinos y lattes.",
+      "Variedad de modelos desde básicas hasta profesionales."
+    ],
+    "cons": [
+      "Precio elevado, especialmente las automáticas y profesionales.",
+      "Curva de aprendizaje: requiere práctica para hacer un buen espresso.",
+      "Mantenimiento constante: hay que limpiar filtros y descalcificar.",
+      "Ocupan más espacio en comparación con otras cafeteras."
+    ]
+  },
+  {
+    "slug": "las-mejores-cafeteras-superautomaticas",
+    "title": "Las Mejores Cafeteras Superautomáticas",
+    "shortTitle": "Cafeteras Superautomáticas",
+    "intro": "Las cafeteras superautomáticas preparan café con solo tocar un botón. Muelen los granos, dosifican, prensan y extraen el espresso automáticamente. Algunas incluyen vaporizador para leche y opciones de personalización.",
+    "pros": [
+      "Fácil y rápida, ideal para quienes no quieren complicarse.",
+      "Muele el café en el momento, asegurando frescura y mejor sabor.",
+      "Consistencia en cada taza, sin necesidad de ajustar manualmente.",
+      "Opciones avanzadas, como espumado automático y selección de bebidas."
+    ],
+    "cons": [
+      "Precio elevado: suelen ser costosas.",
+      "Menos control sobre la preparación que las manuales.",
+      "Mantenimiento frecuente: necesitan limpieza y descalcificación regular.",
+      "Tamaño grande: ocupan más espacio en la cocina."
+    ]
+  },
+  {
+    "slug": "las-mejores-cafeteras-de-grano",
+    "title": "Las Mejores Cafeteras de Grano",
+    "shortTitle": "Cafeteras de Grano",
+    "intro": "Las cafeteras de grano muelen los granos de café en el momento para ofrecer un espresso fresco y aromático. Pueden ser manuales, semiautomáticas o superautomáticas y permiten ajustar la molienda, temperatura y cantidad de café.",
+    "pros": [
+      "Café más fresco y aromático, gracias a la molienda instantánea.",
+      "Personalización total: ajusta intensidad, molienda y temperatura.",
+      "Económicas a largo plazo, ya que el café en grano es más barato que las cápsulas.",
+      "Más ecológicas, al evitar residuos de cápsulas o filtros."
+    ],
+    "cons": [
+      "Precio inicial alto, especialmente en modelos automáticos.",
+      "Mantenimiento frecuente: requieren limpieza de molinillos y circuitos.",
+      "Curva de aprendizaje en modelos manuales.",
+      "Más voluminosas: ocupan más espacio que otras cafeteras."
+    ]
+  },
+  {
+    "slug": "las-mejores-cafeteras-de-capsulas",
+    "title": "Las Mejores Cafeteras de Cápsulas",
+    "shortTitle": "Cafeteras de Cápsulas",
+    "intro": "Las cafeteras de cápsulas ofrecen la forma más rápida y cómoda de preparar café en casa: insertas la cápsula, pulsas un botón y en segundos tienes tu bebida lista, con una limpieza mínima.",
+    "pros": [
+      "Rapidez y comodidad: café listo en segundos.",
+      "Gran variedad de sabores y marcas de cápsulas.",
+      "Fáciles de usar, ideales para toda la familia.",
+      "Tamaño compacto, perfectas para cocinas pequeñas."
+    ],
+    "cons": [
+      "El coste por taza es más alto que con café molido o en grano.",
+      "Dependencia de las cápsulas de una marca concreta (salvo modelos compatibles).",
+      "Generan más residuos que otros métodos.",
+      "Menos margen de personalización del café."
+    ]
+  }
+]

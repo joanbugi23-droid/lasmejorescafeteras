@@ -1,0 +1,52 @@
+---
+interface Props {
+  asin: string;
+  data?: {
+    title?: string | null;
+    image?: string | null;
+    price?: string | null;
+    available?: boolean;
+    availabilityMessage?: string | null;
+    url?: string | null;
+  } | null;
+  partnerTag: string;
+  featured?: boolean;
+}
+
+const { asin, data, partnerTag, featured = false } = Astro.props;
+
+const title = data?.title ?? "Cafetera disponible en Amazon";
+const image = data?.image ?? null;
+const url = data?.url ?? `https://www.amazon.es/dp/${asin}?tag=${partnerTag}`;
+const available = data?.available ?? true;
+const price = data?.price ?? null;
+---
+
+<article class="product-card">
+  {featured && <span class="badge">Recomendada</span>}
+  <div class="thumb">
+    {
+      image ? (
+        <img src={image} alt={title} loading="lazy" />
+      ) : (
+        <span aria-hidden="true">☕</span>
+      )
+    }
+  </div>
+  <div class="body">
+    <h3>{title}</h3>
+    {
+      price ? (
+        <div class="price">{price}</div>
+      ) : (
+        <div class="price unavailable">
+          {available ? "Ver precio actual en Amazon" : "No disponible actualmente"}
+        </div>
+      )
+    }
+    {data?.availabilityMessage && <div class="availability">{data.availabilityMessage}</div>}
+    <a class="cta" href={url} target="_blank" rel="nofollow sponsored noopener">
+      Ver en Amazon
+    </a>
+  </div>
+</article>

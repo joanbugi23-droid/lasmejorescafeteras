@@ -1,0 +1,38 @@
+[
+  { "asin": "B0CCDBVYQ7", "category": "las-mejores-cafeteras-italianas" },
+  { "asin": "B0019M4H16", "category": "las-mejores-cafeteras-italianas" },
+  { "asin": "B071CQZF79", "category": "las-mejores-cafeteras-italianas" },
+  { "asin": "B008KO2DH6", "category": "las-mejores-cafeteras-italianas" },
+  { "asin": "B00791DSM0", "category": "las-mejores-cafeteras-italianas" },
+  { "asin": "B00E39IPLU", "category": "las-mejores-cafeteras-italianas" },
+
+  { "asin": "B06X3Z9MF3", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B0CC4NVW32", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B00W506FIY", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B00INSX904", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B0763N7WMP", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B0DDPTH478", "category": "las-mejores-cafeteras-express", "featured": true },
+
+  { "asin": "B0BPZQXZRZ", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B0D7PXD6NF", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B0DVCH9JRL", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B09MWWWZGL", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B07PP9LJ5M", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B00UTJQLZK", "category": "las-mejores-cafeteras-superautomaticas", "featured": true },
+
+  { "asin": "B076FRNGYB", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B00INSX904", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B00YUUZIY4", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B0CDCMYLD8", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B0BWSFGQ49", "category": "las-mejores-cafeteras-de-grano", "featured": true },
+  { "asin": "B0B3JFH9KH", "category": "las-mejores-cafeteras-de-grano", "featured": true },
+  { "asin": "B0BYMQSK1J", "category": "las-mejores-cafeteras-de-grano", "featured": true },
+
+  { "asin": "B09G88K1HB", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B08BXF8Q9R", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B0857Z91PY", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B0857Z9JQB", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B0812552CW", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B07H8VRSH2", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B01EGUGO7M", "category": "las-mejores-cafeteras-de-capsulas" }
+]

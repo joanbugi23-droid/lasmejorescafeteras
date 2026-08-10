@@ -1,0 +1,27 @@
+---
+import categories from "../data/categories.json";
+
+const { pathname } = Astro.url;
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/">
+      <span class="cup">☕</span>
+      Las Mejores Cafeteras
+    </a>
+    <nav class="main-nav" aria-label="Categorías de cafeteras">
+      <a href="/" aria-current={pathname === "/" ? "page" : undefined}>Inicio</a>
+      {
+        categories.map((cat) => (
+          <a
+            href={`/${cat.slug}/`}
+            aria-current={pathname === `/${cat.slug}/` ? "page" : undefined}
+          >
+            {cat.shortTitle}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

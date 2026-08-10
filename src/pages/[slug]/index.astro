@@ -1,0 +1,63 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import categories from "../../data/categories.json";
+import products from "../../data/products.json";
+import { loadPrices } from "../../lib/prices.mjs";
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lafamilialoca-21";
+const prices = loadPrices();
+const categoryProducts = products.filter((p) => p.category === category.slug);
+---
+
+<Base
+  title={`${category.title} 2025: Comparativa y Precios Actualizados`}
+  description={category.intro}
+>
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Inicio</a> / {category.shortTitle}
+    </nav>
+
+    <section class="section" style="padding-top: 18px;">
+      <h1 class="section-title">{category.title}</h1>
+      <p class="section-lead">{category.intro}</p>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <h3>✔ Ventajas</h3>
+          <ul>
+            {category.pros.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="cons">
+          <h3>✘ Desventajas</h3>
+          <ul>
+            {category.cons.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="product-grid">
+        {
+          categoryProducts.map((p) => (
+            <ProductCard
+              asin={p.asin}
+              data={prices[p.asin]}
+              partnerTag={PARTNER_TAG}
+              featured={p.featured}
+            />
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</Base>
