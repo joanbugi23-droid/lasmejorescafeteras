@@ -2,7 +2,11 @@
 
 Sitio estático (Astro) con recomendaciones de cafeteras por categoría. Los precios,
 la disponibilidad, el título y la imagen de cada producto se obtienen automáticamente
-de Amazon Product Advertising API (PA-API 5.0) — no se editan a mano.
+de la **Amazon Creators API** — no se editan a mano.
+
+> La antigua Product Advertising API 5.0 (autenticada con AWS Signature V4) se
+> retiró el 15/05/2026. Amazon la sustituyó por Creators API, que usa credenciales
+> OAuth (Client ID + Client Secret) en vez de claves AWS.
 
 ## Cómo añadir una cafetera nueva
 
@@ -27,11 +31,16 @@ automático se encarga de consultar el precio real y publicar el sitio.
 
 ## Cómo se actualizan los precios
 
-`scripts/fetch-prices.mjs` llama a PA-API 5.0 (`GetItems`) por cada ASIN único de
-`products.json` y genera `src/data/prices.generated.json`, que las páginas usan al
-construirse. No usa ninguna librería de terceros para firmar las peticiones
-(AWS Signature V4), solo el módulo `crypto` de Node — así no depende de paquetes
-sin mantenimiento.
+`scripts/fetch-prices.mjs` pide un token OAuth (client_credentials) y llama a
+`getItems` de Creators API por cada ASIN único de `products.json`, generando
+`src/data/prices.generated.json`, que las páginas usan al construirse. No depende
+de ninguna librería de terceros, solo `fetch` nativo de Node.
+
+**Requisito de elegibilidad de Amazon**: para poder llamar a la API hacen falta
+al menos **10 ventas válidas en los últimos 30 días** en la cuenta de Afiliado
+(puede tardar hasta 48h en activarse tras crear la credencial). Si no se cumple,
+la API devuelve el error `AssociateNotEligible` y el script lo deja escrito en
+el log sin romper el despliegue (conserva los precios ya guardados).
 
 Este script se ejecuta automáticamente **cada día a las 06:00 UTC** mediante GitHub
 Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)), y también
@@ -46,7 +55,7 @@ npm run dev
 ```
 
 Para probar la actualización de precios en tu máquina, copia `.env.example` a
-`.env` y rellena tus credenciales de PA-API (ese archivo nunca se sube al
+`.env` y rellena tus credenciales de Creators API (ese archivo nunca se sube al
 repositorio):
 
 ```bash
@@ -60,7 +69,7 @@ npm run fetch-prices
    a ese repositorio, framework preset "Astro", comando de build `npm run build`,
    carpeta de salida `dist`.
 3. **Secrets del repositorio** (GitHub → Settings → Secrets and variables → Actions):
-   - `AMAZON_ACCESS_KEY`, `AMAZON_SECRET_KEY`, `AMAZON_PARTNER_TAG` (credenciales de PA-API)
+   - `AMAZON_CREDENTIAL_ID`, `AMAZON_CREDENTIAL_SECRET`, `AMAZON_PARTNER_TAG` (credenciales de Creators API)
    - `CLOUDFLARE_API_TOKEN` (con permiso "Cloudflare Pages: Edit")
    - `CLOUDFLARE_ACCOUNT_ID`
 4. **Dominio propio**: en Cloudflare Pages → tu proyecto → Custom domains, añade

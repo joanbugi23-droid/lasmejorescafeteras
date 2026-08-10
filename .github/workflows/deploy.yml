@@ -27,10 +27,10 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Refrescar precios desde Amazon PA-API
+      - name: Refrescar precios desde Amazon Creators API
         env:
-          AMAZON_ACCESS_KEY: ${{ secrets.AMAZON_ACCESS_KEY }}
-          AMAZON_SECRET_KEY: ${{ secrets.AMAZON_SECRET_KEY }}
+          AMAZON_CREDENTIAL_ID: ${{ secrets.AMAZON_CREDENTIAL_ID }}
+          AMAZON_CREDENTIAL_SECRET: ${{ secrets.AMAZON_CREDENTIAL_SECRET }}
           AMAZON_PARTNER_TAG: ${{ secrets.AMAZON_PARTNER_TAG }}
         run: npm run fetch-prices
 
