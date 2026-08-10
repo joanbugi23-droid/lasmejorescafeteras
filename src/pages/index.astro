@@ -3,14 +3,13 @@ import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
 import categories from "../data/categories.json";
 import products from "../data/products.json";
-import { loadPrices } from "../lib/prices.mjs";
+import { loadPrices, lastUpdatedLabel } from "../lib/prices.mjs";
 
-const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lafamilialoca-21";
+const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
 const prices = loadPrices();
+const updatedLabel = lastUpdatedLabel(prices);
 
-const featured = products
-  .filter((p) => p.featured)
-  .slice(0, 5);
+const featured = products.filter((p) => p.featured);
 
 const categoryIcons = {
   "las-mejores-cafeteras-italianas": "🫖",
@@ -22,8 +21,8 @@ const categoryIcons = {
 ---
 
 <Base
-  title="Las Mejores Cafeteras 2025 | Guía de compra y precios actualizados"
-  description="Comparativas y recomendaciones de las mejores cafeteras italianas, express, superautomáticas, de grano y de cápsulas, con precios de Amazon actualizados a diario."
+  title="Las Mejores Cafeteras | Guía de compra y precios actualizados"
+  description="Comparativas y recomendaciones de las mejores cafeteras italianas, express, superautomáticas, de grano y de cápsulas, con precios de Amazon actualizados automáticamente."
 >
   <section class="hero">
     <div class="container">
@@ -33,7 +32,10 @@ const categoryIcons = {
         para ayudarte a elegir con confianza. Los precios se actualizan automáticamente
         cada día directamente desde Amazon.
       </p>
-      <p class="disclosure">Como Afiliados de Amazon, obtenemos ingresos por las compras que cumplen los requisitos aplicables.</p>
+      <p class="disclosure">
+        Como Afiliados de Amazon, obtenemos ingresos por las compras que cumplen los requisitos aplicables.
+        {updatedLabel && <> · Precios actualizados el {updatedLabel}.</>}
+      </p>
     </div>
   </section>
 

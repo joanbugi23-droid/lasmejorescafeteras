@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import categories from "../../data/categories.json";
 import products from "../../data/products.json";
-import { loadPrices } from "../../lib/prices.mjs";
+import { loadPrices, lastUpdatedLabel } from "../../lib/prices.mjs";
 
 export function getStaticPaths() {
   return categories.map((cat) => ({
@@ -13,13 +13,14 @@ export function getStaticPaths() {
 }
 
 const { category } = Astro.props;
-const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lafamilialoca-21";
+const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
 const prices = loadPrices();
 const categoryProducts = products.filter((p) => p.category === category.slug);
+const updatedLabel = lastUpdatedLabel(prices);
 ---
 
 <Base
-  title={`${category.title} 2025: Comparativa y Precios Actualizados`}
+  title={`${category.title}: Comparativa y Precios Actualizados`}
   description={category.intro}
 >
   <div class="container">
@@ -30,6 +31,7 @@ const categoryProducts = products.filter((p) => p.category === category.slug);
     <section class="section" style="padding-top: 18px;">
       <h1 class="section-title">{category.title}</h1>
       <p class="section-lead">{category.intro}</p>
+      {updatedLabel && <p class="section-lead" style="margin-top: -18px; font-size: 0.85rem;">Precios y disponibilidad actualizados el {updatedLabel}.</p>}
 
       <div class="pros-cons">
         <div class="pros">
