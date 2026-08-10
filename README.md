@@ -62,20 +62,36 @@ repositorio):
 npm run fetch-prices
 ```
 
-## Desplegar en producción (`lasmejorescafeteras.com`)
+## Desplegar en producción (`lasmejorescafeteras.com`, dominio en Hostinger)
 
-1. **Repositorio en GitHub**: sube esta carpeta a un repositorio (puede ser privado).
-2. **Cuenta de Cloudflare** (gratis): crea un proyecto de **Cloudflare Pages** conectado
-   a ese repositorio, framework preset "Astro", comando de build `npm run build`,
-   carpeta de salida `dist`.
-3. **Secrets del repositorio** (GitHub → Settings → Secrets and variables → Actions):
-   - `AMAZON_CREDENTIAL_ID`, `AMAZON_CREDENTIAL_SECRET`, `AMAZON_PARTNER_TAG` (credenciales de Creators API)
-   - `CLOUDFLARE_API_TOKEN` (con permiso "Cloudflare Pages: Edit")
-   - `CLOUDFLARE_ACCOUNT_ID`
-4. **Dominio propio**: en Cloudflare Pages → tu proyecto → Custom domains, añade
-   `lasmejorescafeteras.com` y sigue las instrucciones para apuntar el DNS (si el
-   dominio ya usa Cloudflare como DNS, se conecta con un par de clics; si está en
-   otro proveedor, te dará un registro CNAME/A que añadir allí).
+El repositorio ya está en GitHub: [joanbugi23-droid/lasmejorescafeteras](https://github.com/joanbugi23-droid/lasmejorescafeteras).
+El despliegue lo hace por completo la GitHub Action ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))
+con `wrangler pages deploy`, que **crea el proyecto de Cloudflare Pages automáticamente**
+en el primer despliegue — no hace falta conectar el repositorio a mano desde el
+panel de Cloudflare.
+
+1. **Cuenta de Cloudflare** (gratis, solo un email): [dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up).
+2. **Account ID**: una vez dentro, en el panel de "Workers & Pages" (o en la home
+   del dashboard), en la columna derecha aparece tu **Account ID**. Cópialo.
+3. **API Token**: ve a [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) →
+   "Create Token" → "Create Custom Token" → permiso **Account · Cloudflare Pages · Edit**
+   → selecciona tu cuenta → "Continue to summary" → "Create Token". Cópialo (solo se
+   muestra una vez).
+4. **Secrets del repositorio** (GitHub → tu repo → Settings → Secrets and variables →
+   Actions → "New repository secret"), uno por uno:
+   - `AMAZON_CREDENTIAL_ID`, `AMAZON_CREDENTIAL_SECRET`, `AMAZON_PARTNER_TAG` (los mismos valores que ya tienes en tu `.env` local / el CSV de Creators API)
+   - `CLOUDFLARE_API_TOKEN` (del paso 3)
+   - `CLOUDFLARE_ACCOUNT_ID` (del paso 2)
+5. **Lanzar el primer despliegue**: con los 5 secrets creados, ve a la pestaña
+   "Actions" del repositorio → workflow "Actualizar precios y desplegar" → "Run workflow".
+   Esto crea el proyecto `lasmejorescafeteras` en Cloudflare Pages y publica el sitio
+   en una URL tipo `lasmejorescafeteras.pages.dev`.
+6. **Dominio propio**: en el dashboard de Cloudflare → Workers & Pages → proyecto
+   `lasmejorescafeteras` → Custom domains → añade `lasmejorescafeteras.com`. Cloudflare
+   te dará un registro **CNAME** (o a veces un `TXT` de verificación primero) — entra
+   en **Hostinger → hPanel → Dominios → DNS / Nameservers** y añade ese registro ahí.
+   No hace falta mover el dominio ni cambiar los nameservers a Cloudflare: el DNS
+   sigue en Hostinger, solo se añade ese registro apuntando al sitio.
 
 Ningún secreto se guarda nunca en el código ni en el repositorio: solo viven como
-variables de entorno en GitHub Actions y en Cloudflare.
+GitHub Secrets y dentro de Cloudflare.
