@@ -11,6 +11,7 @@ import {
   lastUpdatedLabel,
   priceGauge,
   rankBadges,
+  representativeImage,
 } from "../lib/catalog.mjs";
 import { itemListJsonLd } from "../lib/seo.mjs";
 
@@ -29,6 +30,11 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
 const categoryPreviews = categories.map((cat) => ({
   category: cat,
   items: resolveItems(catalog.categories[cat.slug], catalog.items).slice(0, 3),
+}));
+
+const categoryTiles = categories.map((cat) => ({
+  category: cat,
+  image: representativeImage(cat.slug, catalog),
 }));
 
 const topItemList = top.length > 0 ? itemListJsonLd(top, "Top Cafeteras") : null;
@@ -50,6 +56,26 @@ const dealsItemList = deals.length > 0 ? itemListJsonLd(deals, "Ofertas del Mes"
         <h1>Las 3 Mejores Cafeteras Ahora Mismo</h1>
       </div>
     </header>
+
+    <section class="section" style="padding-top: 6px; padding-bottom: 18px;" aria-labelledby="cat-tiles-heading">
+      <h2 class="section-title" id="cat-tiles-heading" style="position:absolute; left:-9999px;">
+        Categorías de cafeteras
+      </h2>
+      <div class="cat-tile-grid">
+        {
+          categoryTiles.map(({ category, image }) => (
+            <a class="cat-tile" href={`/${category.slug}/`}>
+              {image ? (
+                <img src={image} alt={category.shortTitle} loading="lazy" />
+              ) : (
+                <div class="cat-tile-empty" aria-hidden="true" />
+              )}
+              <span class="cat-tile-bar">{category.shortTitle}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
 
     {
       top3.length > 0 && (
