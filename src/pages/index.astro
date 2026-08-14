@@ -4,7 +4,14 @@ import ProductCard from "../components/ProductCard.astro";
 import JsonLd from "../components/JsonLd.astro";
 import categories from "../data/categories.json";
 import tops from "../data/tops.json";
-import { loadCatalog, resolveItems, representativeImage, activeDeals, lastUpdatedLabel } from "../lib/catalog.mjs";
+import {
+  loadCatalog,
+  resolveItems,
+  activeDeals,
+  lastUpdatedLabel,
+  priceGauge,
+  rankBadges,
+} from "../lib/catalog.mjs";
 import { itemListJsonLd } from "../lib/seo.mjs";
 
 const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
@@ -12,9 +19,17 @@ const catalog = loadCatalog();
 const updatedLabel = lastUpdatedLabel(catalog.items);
 
 const top = resolveItems(catalog.top, catalog.items);
+const top3 = top.slice(0, 3);
+const top6 = top.slice(3, 9);
+const badges3 = rankBadges(top3);
 const deals = activeDeals(catalog);
 const currentYear = new Date().getFullYear();
 const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length - 1];
+
+const categoryPreviews = categories.map((cat) => ({
+  category: cat,
+  items: resolveItems(catalog.categories[cat.slug], catalog.items).slice(0, 3),
+}));
 
 const topItemList = top.length > 0 ? itemListJsonLd(top, "Top Cafeteras") : null;
 const dealsItemList = deals.length > 0 ? itemListJsonLd(deals, "Ofertas del Mes") : null;
@@ -30,35 +45,44 @@ const dealsItemList = deals.length > 0 ? itemListJsonLd(deals, "Ofertas del Mes"
 
   <div class="container">
     <header class="page-hero">
-      <h1>Las Mejores Cafeteras</h1>
-      {updatedLabel && <span class="updated-pill">Precios actualizados {updatedLabel}</span>}
+      <div>
+        <p class="eyebrow">Actualizado {updatedLabel ?? "automáticamente"} · datos reales de Amazon</p>
+        <h1>Las 3 Mejores Cafeteras Ahora Mismo</h1>
+      </div>
     </header>
 
-    <nav class="category-grid" aria-label="Categorías de cafeteras">
-      {
-        categories.map((cat) => {
-          const image = representativeImage(cat.slug, catalog);
-          return (
-            <a class="category-card" href={`/${cat.slug}/`}>
-              <div class="category-card-photo">
-                {image ? <img src={image} alt={cat.shortTitle} loading="lazy" /> : <div class="thumb-empty" />}
-              </div>
-              <h3>{cat.shortTitle}</h3>
-            </a>
-          );
-        })
-      }
-    </nav>
-
     {
-      top.length > 0 && (
-        <section class="section" aria-labelledby="top-heading">
-          <h2 class="section-title" id="top-heading">
-            Top Cafeteras
+      top3.length > 0 && (
+        <section class="section" style="padding-top: 10px;" aria-labelledby="top3-heading">
+          <h2 class="section-title" id="top3-heading" style="position:absolute; left:-9999px;">
+            Las 3 mejores cafeteras
           </h2>
           <div class="product-grid">
-            {top.map((item) => (
-              <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} featured />
+            {top3.map((item) => (
+              <ProductCard
+                asin={item.asin}
+                data={item}
+                partnerTag={PARTNER_TAG}
+                badgeLabel={badges3[item.asin]}
+                gauge={priceGauge(item, top)}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      top6.length > 0 && (
+        <section class="section" aria-labelledby="top6-heading">
+          <div class="section-head">
+            <h2 class="section-title" id="top6-heading">
+              Más Recomendadas
+            </h2>
+          </div>
+          <div class="product-grid">
+            {top6.map((item) => (
+              <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} gauge={priceGauge(item, top)} />
             ))}
           </div>
         </section>
@@ -68,57 +92,52 @@ const dealsItemList = deals.length > 0 ? itemListJsonLd(deals, "Ofertas del Mes"
     {
       deals.length > 0 && (
         <section class="section" aria-labelledby="deals-heading">
-          <h2 class="section-title" id="deals-heading">
-            Ofertas del Mes
-          </h2>
+          <div class="section-head">
+            <h2 class="section-title" id="deals-heading">
+              Ofertas del Mes
+            </h2>
+          </div>
           <div class="product-grid">
             {deals.map((item) => (
-              <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} />
+              <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} gauge={priceGauge(item, deals)} />
             ))}
           </div>
         </section>
       )
     }
 
-    {
-      top.length > 0 && (
-        <section class="section" aria-labelledby="compare-heading">
-          <h2 class="section-title" id="compare-heading">
-            Comparativa Rápida
-          </h2>
-          <div class="compare-table-wrap">
-            <table class="compare-table">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Producto</th>
-                  <th scope="col">Precio</th>
-                  <th scope="col">Valoración</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {top.map((item) => (
-                  <tr>
-                    <td class="compare-photo">
-                      {item.image ? <img src={item.image} alt={item.title ?? ""} loading="lazy" /> : <div class="thumb-empty" />}
-                    </td>
-                    <td>{item.title ?? "Ver ficha en Amazon"}</td>
-                    <td>{item.available === false ? "No disponible" : item.price ?? "Ver en Amazon"}</td>
-                    <td>{item.starRating ? `★ ${item.starRating}${item.reviewCount ? ` (${item.reviewCount})` : ""}` : "—"}</td>
-                    <td>
-                      <a href={item.url} target="_blank" rel="nofollow sponsored noopener">
-                        Ver en Amazon
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )
-    }
+    <section class="section" aria-labelledby="categories-heading">
+      <div class="section-head">
+        <h2 class="section-title" id="categories-heading">
+          Lo Mejor de Cada Categoría
+        </h2>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        {
+          categoryPreviews.map(({ category, items }) => (
+            <div class="cat-strip">
+              <div class="cat-strip-head">
+                <h3>{category.shortTitle}</h3>
+                <a class="see-all" href={`/${category.slug}/`}>
+                  Ver todas →
+                </a>
+              </div>
+              {items.length > 0 ? (
+                <div class="product-grid">
+                  {items.map((item) => (
+                    <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} gauge={priceGauge(item, items)} />
+                  ))}
+                </div>
+              ) : (
+                <p class="section-lead" style="margin:0;">
+                  Cargando selección — disponible en cuanto se actualice el catálogo.
+                </p>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </section>
 
     <section class="section guide-section">
       <h2 class="section-title">Cómo Elegir tu Cafetera</h2>

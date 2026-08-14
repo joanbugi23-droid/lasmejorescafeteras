@@ -8,6 +8,6 @@
     { "slug": "las-mejores-cafeteras-de-goteo", "keywords": "cafetera de goteo", "count": 5 },
     { "slug": "molinillos-de-cafe-electricos", "keywords": "molinillo de cafe electrico", "count": 5 }
   ],
-  "top": { "keywords": "cafetera", "sortBy": "AvgCustomerReviews", "count": 5 },
+  "top": { "keywords": "cafetera", "sortBy": "AvgCustomerReviews", "count": 9 },
   "deals": { "keywords": "cafetera", "minSavingPercent": 15, "sortBy": "Featured", "count": 5 }
 }

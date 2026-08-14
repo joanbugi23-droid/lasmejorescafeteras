@@ -73,6 +73,35 @@ export function categoryHighlights(items) {
   return labels;
 }
 
+// Elemento señal del sitio: posición del precio de un producto dentro del
+// rango de precios de su propio grupo (categoría, Top...), para el medidor
+// de gama bajo cada precio. Devuelve null si no hay suficientes precios
+// para que un rango tenga sentido.
+export function priceGauge(item, groupItems) {
+  const prices = groupItems.map((i) => i.priceAmount).filter((p) => p != null);
+  if (item.priceAmount == null || prices.length < 2) return null;
+
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  if (min === max) return null;
+
+  const position = Math.round(((item.priceAmount - min) / (max - min)) * 100);
+  const tier = position < 33 ? "Gama económica" : position < 66 ? "Gama media" : "Gama premium";
+  return { position, tier };
+}
+
+// Etiquetas de posición (Nº1, Top 3...) para un ranking ya ordenado por un
+// criterio objetivo de la API (ej. AvgCustomerReviews). No decide el orden,
+// solo lo etiqueta.
+export function rankBadges(items) {
+  const labels = {};
+  items.forEach((item, index) => {
+    if (index === 0) labels[item.asin] = "Nº1";
+    else if (index < 3) labels[item.asin] = "Top 3";
+  });
+  return labels;
+}
+
 // Texto relativo ("hoy", "ayer", "hace X días") a partir del dato más
 // reciente en cache. Se genera solo a partir de fetchedAt, nunca a mano.
 export function lastUpdatedLabel(items) {

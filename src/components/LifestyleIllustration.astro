@@ -1,0 +1,65 @@
+---
+// Ilustración editorial (no fotorrealista) para cabeceras de blog/categoría.
+// Nunca sustituye a la foto real de producto en la tarjeta de compra.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={`lifestyle-illustration ${className}`}
+  viewBox="0 0 320 140"
+  role="img"
+  aria-label="Ilustración de una persona disfrutando de un café"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M150 46c4-14 16-14 20 0M154 40c3-9 11-9 14 0"
+    fill="none"
+    stroke="var(--amber-soft)"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.75"
+  />
+  <path
+    d="M20 128c8-30 34-30 46-30s38 0 46 30"
+    fill="none"
+    stroke="var(--cream)"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+  <circle cx="66" cy="70" r="22" fill="none" stroke="var(--cream)" stroke-width="3" />
+  <path
+    d="M96 100c10 2 16 8 16 16 0 10-9 16-20 16H70c-11 0-20-6-20-16h46z"
+    fill="none"
+    stroke="var(--amber)"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M112 106c8 0 12 4 12 10s-6 9-12 9"
+    fill="none"
+    stroke="var(--amber)"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+  <path
+    d="M84 92c2-8 9-8 11 0M96 92c2-8 9-8 11 0"
+    fill="none"
+    stroke="var(--amber-soft)"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.8"
+  />
+</svg>
+
+<style>
+  .lifestyle-illustration {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: block;
+  }
+</style>

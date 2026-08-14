@@ -1,6 +1,7 @@
 ---
 import Base from "../../../layouts/Base.astro";
 import JsonLd from "../../../components/JsonLd.astro";
+import LifestyleIllustration from "../../../components/LifestyleIllustration.astro";
 import categories from "../../../data/categories.json";
 import { getCollection, render } from "astro:content";
 import { breadcrumbJsonLd } from "../../../lib/seo.mjs";
@@ -44,9 +45,12 @@ const formatter = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" });
     </nav>
 
     <article class="blog-post">
-      <header class="page-hero">
-        <h1>{post.data.title}</h1>
-      </header>
+      <div class="guide-intro">
+        <header class="page-hero" style="padding-top: 22px;">
+          <h1>{post.data.title}</h1>
+        </header>
+        <LifestyleIllustration />
+      </div>
       <p class="blog-date">Publicado el {formatter.format(post.data.pubDate)}</p>
 
       <div class="blog-content">

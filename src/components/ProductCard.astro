@@ -15,11 +15,12 @@ interface Props {
   } | null;
   partnerTag: string;
   featured?: boolean;
-  badgeLabel?: string | null;
+  badgeLabel?: string | string[] | null;
+  gauge?: { position: number; tier: string } | null;
 }
 
-const { asin, data, partnerTag, featured = false, badgeLabel = null } = Astro.props;
-const badge = badgeLabel ?? (featured ? "Recomendada" : null);
+const { asin, data, partnerTag, featured = false, badgeLabel = null, gauge = null } = Astro.props;
+const badges = badgeLabel ? (Array.isArray(badgeLabel) ? badgeLabel : [badgeLabel]) : featured ? ["Recomendada"] : [];
 
 const title = data?.title ?? "Cafetera disponible en Amazon";
 const image = data?.image ?? null;
@@ -34,8 +35,16 @@ const fullStars = starRating ? Math.round(starRating) : 0;
 ---
 
 <article class:list={["product-card", { "is-unavailable": !available }]}>
-  {badge && available && <span class="badge">{badge}</span>}
-  {discountPercent && <span class="badge badge-discount">-{discountPercent}%</span>}
+  {
+    (badges.length > 0 || discountPercent) && available && (
+      <div class="badges-row">
+        {badges.map((label) => (
+          <span class="badge gold">{label}</span>
+        ))}
+        {discountPercent && <span class="badge deal">-{discountPercent}%</span>}
+      </div>
+    )
+  }
   <div class="thumb">
     {image ? <img src={image} alt={title} loading="lazy" /> : <div class="thumb-empty" aria-hidden="true" />}
   </div>
@@ -62,6 +71,20 @@ const fullStars = starRating ? Math.round(starRating) : 0;
         </div>
       ) : (
         <div class="price unavailable">Ver precio actual en Amazon</div>
+      )
+    }
+    {
+      available && gauge && (
+        <div class="price-gauge">
+          <div class="gauge-label">
+            <span>Económica</span>
+            <span class="current">{gauge.tier}</span>
+            <span>Premium</span>
+          </div>
+          <div class="gauge-track">
+            <span class="marker" style={`left: ${gauge.position}%;`} />
+          </div>
+        </div>
       )
     }
     {available && data?.availabilityMessage && <div class="availability">{data.availabilityMessage}</div>}

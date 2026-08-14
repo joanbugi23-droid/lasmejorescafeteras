@@ -2,8 +2,9 @@
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import JsonLd from "../../components/JsonLd.astro";
+import LifestyleIllustration from "../../components/LifestyleIllustration.astro";
 import categories from "../../data/categories.json";
-import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights } from "../../lib/catalog.mjs";
+import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights, priceGauge } from "../../lib/catalog.mjs";
 import { breadcrumbJsonLd, itemListJsonLd, faqJsonLd } from "../../lib/seo.mjs";
 import { getCollection } from "astro:content";
 
@@ -56,15 +57,26 @@ const faqSchema = faqs.length > 0 ? faqJsonLd(faqs) : null;
       <div class="product-grid">
         {
           categoryItems.map((item) => (
-            <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} badgeLabel={highlights[item.asin]} />
+            <ProductCard
+              asin={item.asin}
+              data={item}
+              partnerTag={PARTNER_TAG}
+              badgeLabel={highlights[item.asin]}
+              gauge={priceGauge(item, categoryItems)}
+            />
           ))
         }
       </div>
     </section>
 
     <section class="section guide-section">
-      <h2 class="section-title">Guía de Compra: {category.shortTitle}</h2>
-      <p class="section-lead">{category.intro}</p>
+      <div class="guide-intro">
+        <div>
+          <h2 class="section-title">Guía de Compra: {category.shortTitle}</h2>
+          <p class="section-lead">{category.intro}</p>
+        </div>
+        <LifestyleIllustration />
+      </div>
 
       <div class="pros-cons">
         <div class="pros">
