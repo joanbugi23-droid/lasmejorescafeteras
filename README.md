@@ -32,6 +32,37 @@ sí o sí un producto concreto, añade su ASIN en
 Estos ASINs "forzados" van siempre primero en su categoría, antes que los
 resultados de la búsqueda automática.
 
+### Datos provisionales mientras la API no está activa
+
+Amazon exige que el precio y la disponibilidad vengan **solo** de la API oficial
+(o de un dato pasado a mano, nunca de volver a visitar Amazon de forma
+automática y recurrente — eso va contra sus normas). Por eso `products.json`
+admite dos tipos de campo distintos:
+
+- **`title` / `image`**: lectura puntual y única al dar de alta el producto
+  (una sola visita a su ficha de Amazon para copiar el título y la URL de la
+  imagen), nunca repetida por el script. Sirve para que la tarjeta se vea bien
+  aunque la API todavía no responda.
+- **`price` / `priceDate`**: precio pasado a mano por el propietario del sitio,
+  como dato temporal. Se muestra en la web con la nota "precio provisional" y
+  se sustituye automáticamente por el dato real en cuanto la API funcione
+  (`scripts/fetch-catalog.mjs` nunca sobrescribe un ASIN que la API ya haya
+  resuelto con éxito antes, pero si la API responde, siempre gana ella).
+
+```json
+{
+  "asin": "B0XXXXXXXX",
+  "category": "las-mejores-cafeteras-express",
+  "title": "Título tal como aparece en Amazon",
+  "image": "https://m.media-amazon.com/images/I/....jpg",
+  "price": "129,00 €",
+  "priceDate": "2026-08-14"
+}
+```
+
+`title`/`image`/`price` son opcionales — sin ellos, el producto simplemente
+espera a que la API tenga datos.
+
 ## Cómo se actualizan los precios y el catálogo
 
 `scripts/fetch-catalog.mjs` pide un token OAuth (client_credentials) y llama a

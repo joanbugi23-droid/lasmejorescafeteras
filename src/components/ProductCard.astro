@@ -12,6 +12,7 @@ interface Props {
     starRating?: number | null;
     reviewCount?: number | null;
     url?: string | null;
+    provisional?: boolean;
   } | null;
   partnerTag: string;
   featured?: boolean;
@@ -68,6 +69,7 @@ const fullStars = starRating ? Math.round(starRating) : 0;
         <div class="price-row">
           <span class="price">{price}</span>
           {previousPrice && <span class="price-before">{previousPrice}</span>}
+          {data?.provisional && <span class="provisional-note">precio provisional</span>}
         </div>
       ) : (
         <div class="price unavailable">Ver precio actual en Amazon</div>

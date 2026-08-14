@@ -1,27 +1,132 @@
 [
-  { "asin": "B0GNMS31J4", "category": "las-mejores-cafeteras-superautomaticas" },
-  { "asin": "B0BWSFGQ49", "category": "las-mejores-cafeteras-superautomaticas" },
-  { "asin": "B0CDCFH17J", "category": "las-mejores-cafeteras-superautomaticas" },
-  { "asin": "B0FT978WSL", "category": "las-mejores-cafeteras-superautomaticas" },
-  { "asin": "B00UTJQLZK", "category": "las-mejores-cafeteras-superautomaticas" },
-  { "asin": "B00MZ2F3Z8", "category": "las-mejores-cafeteras-superautomaticas" },
+  {
+    "asin": "B0GNMS31J4",
+    "category": "las-mejores-cafeteras-superautomaticas",
+    "title": "KRUPS Harmony, Cafetera Superautomática, 4 Bebidas, Espumador Leche, Carbón, EA508",
+    "image": "https://m.media-amazon.com/images/I/61kB+838QWL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0BWSFGQ49",
+    "category": "las-mejores-cafeteras-superautomaticas",
+    "title": "De'Longhi Magnifica S – Perfetto Cafetera Superautomática, Espumador de Leche Manual, Negro, ECAM11.112.B",
+    "image": "https://m.media-amazon.com/images/I/617bJwLkEhL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0CDCFH17J",
+    "category": "las-mejores-cafeteras-superautomaticas",
+    "title": "PHILIPS 3300 Cafetera Superautomática LatteGo, 6 Bebidas, Cromo Negro, EP3347/90",
+    "image": "https://m.media-amazon.com/images/I/61dwcHiX5TL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0FT978WSL",
+    "category": "las-mejores-cafeteras-superautomaticas",
+    "title": "Cecotec Cafetera Superautomática Compacta Cremmaet Cube Red, 1350W, 19 Bares",
+    "image": "https://m.media-amazon.com/images/I/616md7Xi5AL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B00UTJQLZK",
+    "category": "las-mejores-cafeteras-superautomaticas",
+    "title": "Krups Essential, Cafetera Superautomática, 15 Bares, Negra, EA8160",
+    "image": "https://m.media-amazon.com/images/I/71c-QJWd7BL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B00MZ2F3Z8",
+    "category": "las-mejores-cafeteras-superautomaticas",
+    "title": "Krups Roma, Cafetera Superautomática, 15 Bares, Blanca, EA8105",
+    "image": "https://m.media-amazon.com/images/I/61G0WqKVbML._AC_SY879_.jpg"
+  },
 
-  { "asin": "B0CG6FZZGX", "category": "las-mejores-cafeteras-de-capsulas" },
-  { "asin": "B0DHD6X9GP", "category": "las-mejores-cafeteras-de-capsulas" },
-  { "asin": "B00G5YOVZA", "category": "las-mejores-cafeteras-de-capsulas" },
-  { "asin": "B0DKJMQM76", "category": "las-mejores-cafeteras-de-capsulas" },
-  { "asin": "B09B166BMD", "category": "las-mejores-cafeteras-de-capsulas" },
+  {
+    "asin": "B0CG6FZZGX",
+    "category": "las-mejores-cafeteras-de-capsulas",
+    "title": "KRUPS Dolce Gusto Piccolo XS, Cafetera de Cápsulas, Negra, KP1A3BCAS",
+    "image": "https://m.media-amazon.com/images/I/61PT5yfQQmL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0DHD6X9GP",
+    "category": "las-mejores-cafeteras-de-capsulas",
+    "title": "Bosch Cafetera Multibebida Tassimo Happy Friendly, Hasta 70 Bebidas, TAS117E",
+    "image": "https://m.media-amazon.com/images/I/61-GeIFs6ZL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B00G5YOVZA",
+    "category": "las-mejores-cafeteras-de-capsulas",
+    "title": "Nespresso De'Longhi Inissia EN80.B, Cafetera de Cápsulas, 19 Bares, Negro",
+    "image": "https://m.media-amazon.com/images/I/513I0Zj0uxL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0DKJMQM76",
+    "category": "las-mejores-cafeteras-de-capsulas",
+    "title": "Magician1 Mini 5en1 Cafetera de Cápsulas (Nespresso, Dolce Gusto, A Modo Mio, ESE, Molido), 20 Bares",
+    "image": "https://m.media-amazon.com/images/I/71d3qHsrB-L._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B09B166BMD",
+    "category": "las-mejores-cafeteras-de-capsulas",
+    "title": "PHILIPS L'Or Barista Sublime, Cafetera de Cápsulas, Negro, LM9012/60",
+    "image": "https://m.media-amazon.com/images/I/71UixJnbDGL._AC_SX569_.jpg"
+  },
 
-  { "asin": "B07MMSHC4R", "category": "las-mejores-cafeteras-de-grano" },
-  { "asin": "B0DFCSXC1S", "category": "las-mejores-cafeteras-de-grano" },
-  { "asin": "B07B2X1VXZ", "category": "las-mejores-cafeteras-de-grano" },
-  { "asin": "B0DFWRHZ7L", "category": "las-mejores-cafeteras-de-grano" },
+  {
+    "asin": "B07MMSHC4R",
+    "category": "las-mejores-cafeteras-de-grano",
+    "title": "PHILIPS Serie 2200 Cafetera Espresso Automática con Molinillo Cerámico, Negro Mate, EP2220/10",
+    "image": "https://m.media-amazon.com/images/I/61OVw7YXwwL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0DFCSXC1S",
+    "category": "las-mejores-cafeteras-de-grano",
+    "title": "Ninja Luxe Premier, Cafetera 3 en 1 con Molinillo y Espumador Integrados, Plata, ES601EU",
+    "image": "https://m.media-amazon.com/images/I/61XrgBDkS6L._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B07B2X1VXZ",
+    "category": "las-mejores-cafeteras-de-grano",
+    "title": "Sage Barista Express, Cafetera con Molinillo Cónico Integrado, Acero Inoxidable",
+    "image": "https://m.media-amazon.com/images/I/612FBOMlW9L._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0DFWRHZ7L",
+    "category": "las-mejores-cafeteras-de-grano",
+    "title": "Ninja Luxe Essential, Cafetera 2 en 1 con Molinillo y Espumador Integrados, Plata, ES501EU",
+    "image": "https://m.media-amazon.com/images/I/71BQkd55HsL._AC_SX569_.jpg"
+  },
 
-  { "asin": "B06WGTZ874", "category": "las-mejores-cafeteras-express" },
-  { "asin": "B085J8LBXF", "category": "las-mejores-cafeteras-express" },
-  { "asin": "B0BQ1TCC6F", "category": "las-mejores-cafeteras-express" },
-  { "asin": "B06WD7Z8GD", "category": "las-mejores-cafeteras-express" },
-  { "asin": "B082DP67BT", "category": "las-mejores-cafeteras-express" },
+  {
+    "asin": "B06WGTZ874",
+    "category": "las-mejores-cafeteras-express",
+    "title": "De'Longhi Dedica, Cafetera de Bomba de Acero Inoxidable, Metal, EC685.M",
+    "image": "https://m.media-amazon.com/images/I/61kiURHfQrL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B085J8LBXF",
+    "category": "las-mejores-cafeteras-express",
+    "title": "De'Longhi Stilosa Premium EC260.BK, Cafetera de Bomba, 15 Bares, Negro y Plata",
+    "image": "https://m.media-amazon.com/images/I/71qP14nL2cL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B0BQ1TCC6F",
+    "category": "las-mejores-cafeteras-express",
+    "title": "Cecotec Cafetera Express Power Espresso Touch ColdBrew, 20 Bares, 1350W",
+    "image": "https://m.media-amazon.com/images/I/71PygM137VL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B06WD7Z8GD",
+    "category": "las-mejores-cafeteras-express",
+    "title": "De'Longhi Dedica, Cafetera de Bomba de Acero Inoxidable, Rojo, EC685.R",
+    "image": "https://m.media-amazon.com/images/I/61iBpxEtJYL._AC_SX569_.jpg"
+  },
+  {
+    "asin": "B082DP67BT",
+    "category": "las-mejores-cafeteras-express",
+    "title": "Orbegozo EX 6000, Cafetera Express, 20 Bar, Frontal Inox",
+    "image": "https://m.media-amazon.com/images/I/61greq1jvgL._AC_SX569_.jpg"
+  },
 
-  { "asin": "B0BNJN4W2G", "category": "las-mejores-cafeteras-de-goteo" }
+  {
+    "asin": "B0BNJN4W2G",
+    "category": "las-mejores-cafeteras-de-goteo",
+    "title": "Cecotec Cafetera de Goteo Programable Coffee 66 Smart Plus, 12 Cafés, Acero Inox",
+    "image": "https://m.media-amazon.com/images/I/51cPkx5GMpL._AC_SX569_.jpg"
+  }
 ]

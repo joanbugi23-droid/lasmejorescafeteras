@@ -7,6 +7,12 @@
 //   una búsqueda general ("top") y una de ofertas (minSavingPercent).
 // - src/data/products.json es el "método secundario": ASINs puntuales que se
 //   quieren forzar en una categoría (se resuelven con GetItems y van primero).
+//   Puede incluir title/image (lectura puntual y única al dar de alta el
+//   producto, nunca recurrente) y price/priceDate (precio pasado a mano por
+//   el usuario mientras la API no esté activa). Este script NUNCA scrapea
+//   Amazon de forma recurrente para sacar precio/disponibilidad — eso solo
+//   puede venir de la API oficial o de ese dato manual, marcado como
+//   "provisional" en la web hasta que la API lo sustituya.
 // - src/data/tops.json son las páginas "Top Cafeteras {año}" (lista fija de
 //   ASINs decidida una vez al año; aquí solo se refresca su precio/stock).
 //
@@ -164,6 +170,30 @@ async function loadJson(filePath, fallback) {
   }
 }
 
+// Ficha provisional a partir de datos manuales (products.json), usada solo
+// mientras la API no tiene datos propios para ese ASIN. Nunca pisa un dato
+// ya obtenido de la API en una ejecución anterior.
+function manualFallback(pick, partnerTag) {
+  return {
+    asin: pick.asin,
+    title: pick.title ?? null,
+    image: pick.image ?? null,
+    price: pick.price ?? null,
+    priceAmount: null,
+    currency: null,
+    previousPrice: null,
+    discountPercent: null,
+    available: true,
+    availabilityMessage: null,
+    starRating: null,
+    reviewCount: null,
+    salesRank: null,
+    url: `https://www.amazon.es/dp/${pick.asin}?tag=${partnerTag}`,
+    fetchedAt: pick.priceDate ?? null,
+    provisional: true,
+  };
+}
+
 async function main() {
   const manualPicks = await loadJson(PRODUCTS_PATH, []);
   const queries = await loadJson(QUERIES_PATH, { categories: [], top: null, deals: null });
@@ -172,9 +202,26 @@ async function main() {
   catalog.items ??= {};
   catalog.categories ??= {};
 
+  // Rellena huecos con datos manuales (foto/título de lectura puntual, precio
+  // pasado a mano) antes de intentar la API, para que la web nunca dependa
+  // solo de que la API esté disponible. La API, si funciona, sobrescribe
+  // esto más abajo con datos reales y en vivo.
+  for (const pick of manualPicks) {
+    if (!catalog.items[pick.asin] && (pick.title || pick.image)) {
+      catalog.items[pick.asin] = manualFallback(pick, PARTNER_TAG || "lasmejores03-21");
+    }
+  }
+  for (const query of queries.categories ?? []) {
+    const pinnedAsins = uniqueAsins(manualPicks.filter((p) => p.category === query.slug).map((p) => p.asin));
+    if (pinnedAsins.length > 0 && !catalog.categories[query.slug]) {
+      catalog.categories[query.slug] = pinnedAsins.slice(0, query.count ?? 5);
+    }
+  }
+
   if (!CREDENTIAL_ID || !CREDENTIAL_SECRET || !PARTNER_TAG) {
     console.warn("[fetch-catalog] Faltan credenciales (AMAZON_CREDENTIAL_ID / AMAZON_CREDENTIAL_SECRET / AMAZON_PARTNER_TAG).");
-    console.warn("[fetch-catalog] Se omite la llamada a Amazon y se conserva la cache de catálogo existente (si la hay).");
+    console.warn("[fetch-catalog] Se omite la llamada a Amazon; se usan solo los datos manuales/cache existente.");
+    await writeFile(OUTPUT_PATH, JSON.stringify(catalog, null, 2) + "\n", "utf8");
     return;
   }
 
@@ -184,6 +231,7 @@ async function main() {
   } catch (err) {
     console.error("[fetch-catalog] No se pudo autenticar con Creators API:", err.message);
     console.error("[fetch-catalog] Se conserva la cache de catálogo existente sin cambios.");
+    await writeFile(OUTPUT_PATH, JSON.stringify(catalog, null, 2) + "\n", "utf8");
     return;
   }
 
@@ -202,14 +250,14 @@ async function main() {
         pinnedItems = await getItems(accessToken, pinnedAsins);
         saveItems(pinnedItems);
       } catch (err) {
-        console.error(`[fetch-catalog] Error obteniendo ASINs forzados de "${query.slug}":`, err.message);
+        console.error(`[fetch-catalog] Error obteniendo ASINs forzados de "${query.slug}" (se usa el dato manual si lo hay):`, err.message);
       }
     }
 
     try {
       const found = await searchItems(accessToken, query);
       saveItems(found);
-      const combined = uniqueAsins([...pinnedItems.map((i) => i.asin), ...found.map((i) => i.asin)]);
+      const combined = uniqueAsins([...pinnedAsins, ...found.map((i) => i.asin)]);
       catalog.categories[query.slug] = combined.slice(0, query.count ?? 5);
     } catch (err) {
       console.error(`[fetch-catalog] Error buscando "${query.slug}" (se conserva la lista anterior):`, err.message);

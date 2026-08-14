@@ -569,6 +569,14 @@ a {
   text-decoration: line-through;
 }
 
+.provisional-note {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-style: italic;
+  width: 100%;
+}
+
 @keyframes price-in {
   from {
     opacity: 0;
