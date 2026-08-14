@@ -1,0 +1,100 @@
+---
+// Tabla comparativa rápida, siempre ANTES de las tarjetas de producto.
+// El orden y la fila destacada ("Mejor opción") vienen de pickBestAsin /
+// categoryHighlights (criterios objetivos de la API), nunca de una opinión
+// editorial escrita a mano aquí.
+interface Item {
+  asin: string;
+  title?: string | null;
+  image?: string | null;
+  price?: string | null;
+  available?: boolean;
+  starRating?: number | null;
+  reviewCount?: number | null;
+  url?: string | null;
+}
+
+interface Props {
+  items: Item[];
+  bestAsin?: string | null;
+  highlights?: Record<string, string>;
+  partnerTag: string;
+}
+
+const { items, bestAsin = null, highlights = {}, partnerTag } = Astro.props;
+
+const ordered = bestAsin
+  ? [items.find((i) => i.asin === bestAsin), ...items.filter((i) => i.asin !== bestAsin)].filter(Boolean)
+  : items;
+
+function scoreOutOf100(starRating?: number | null) {
+  if (!starRating) return null;
+  return Math.round((starRating / 5) * 100);
+}
+---
+
+{
+  ordered.length > 1 && (
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Puntuación</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Destaca por</th>
+            <th scope="col" />
+          </tr>
+        </thead>
+        <tbody>
+          {ordered.map((item, index) => {
+            const url = item.url ?? `https://www.amazon.es/dp/${item.asin}?tag=${partnerTag}`;
+            const title = item.title ?? "Cafetera disponible en Amazon";
+            const fullStars = item.starRating ? Math.round(item.starRating) : 0;
+            const score = scoreOutOf100(item.starRating);
+            const highlight = highlights[item.asin] ?? null;
+            const isBest = index === 0 && bestAsin;
+
+            return (
+              <tr class:list={[{ "compare-best": isBest }]}>
+                <td class="compare-product">
+                  {isBest && <span class="badge gold compare-best-badge">Mejor opción</span>}
+                  <a href={url} target="_blank" rel="nofollow sponsored noopener" class="compare-product-link">
+                    <span class="compare-photo">
+                      {item.image ? <img src={item.image} alt={title} loading="lazy" /> : <span class="thumb-empty" aria-hidden="true" />}
+                    </span>
+                    <span class="compare-title">{title}</span>
+                  </a>
+                </td>
+                <td>
+                  {item.starRating ? (
+                    <span class="compare-score">
+                      <span class="stars" aria-hidden="true">
+                        {"★".repeat(fullStars)}
+                        {"☆".repeat(5 - fullStars)}
+                      </span>
+                      <span class="review-count">
+                        {score}/100{item.reviewCount ? ` (${item.reviewCount})` : ""}
+                      </span>
+                    </span>
+                  ) : (
+                    <span class="review-count">—</span>
+                  )}
+                </td>
+                <td>
+                  {item.available === false ? "No disponible" : item.price ?? "Ver en Amazon"}
+                </td>
+                <td>{highlight ?? "—"}</td>
+                <td>
+                  <a class="cta compare-cta" href={url} target="_blank" rel="nofollow sponsored noopener">
+                    Ver en Amazon
+                  </a>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}

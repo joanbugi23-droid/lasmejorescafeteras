@@ -56,6 +56,13 @@ const fullStars = starRating ? Math.round(starRating) : 0;
       </a>
     </h3>
     {
+      available && (
+        <a class="cta cta-top" href={url} target="_blank" rel="nofollow sponsored noopener">
+          Ver en Amazon
+        </a>
+      )
+    }
+    {
       starRating && (
         <div class="rating" aria-label={`${starRating} de 5 estrellas`}>
           <span class="stars" aria-hidden="true">
@@ -94,7 +101,7 @@ const fullStars = starRating ? Math.round(starRating) : 0;
       )
     }
     {available && data?.availabilityMessage && <div class="availability">{data.availabilityMessage}</div>}
-    <a class="cta" href={url} target="_blank" rel="nofollow sponsored noopener">
+    <a class="cta cta-bottom" href={url} target="_blank" rel="nofollow sponsored noopener">
       Ver en Amazon
     </a>
   </div>

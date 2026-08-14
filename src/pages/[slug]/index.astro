@@ -1,11 +1,12 @@
 ---
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
+import ComparisonTable from "../../components/ComparisonTable.astro";
 import JsonLd from "../../components/JsonLd.astro";
 import LifestyleIllustration from "../../components/LifestyleIllustration.astro";
 import categories from "../../data/categories.json";
 import comparisons from "../../data/comparisons.json";
-import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights, priceGauge, minPriceLabel } from "../../lib/catalog.mjs";
+import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights, priceGauge, minPriceLabel, pickBestAsin } from "../../lib/catalog.mjs";
 import { breadcrumbJsonLd, itemListJsonLd, faqJsonLd } from "../../lib/seo.mjs";
 import { getCollection } from "astro:content";
 
@@ -22,6 +23,7 @@ const catalog = loadCatalog();
 const categoryItems = resolveItems(catalog.categories[category.slug], catalog.items);
 const updatedLabel = lastUpdatedLabel(catalog.items);
 const highlights = categoryHighlights(categoryItems);
+const bestAsin = pickBestAsin(categoryItems);
 const faqs = category.faqs ?? [];
 const relatedPosts = (await getCollection("blog")).filter(
   (post) => post.data.relatedCategory === category.slug
@@ -57,7 +59,11 @@ const pageDescription = fromPrice ? `${category.intro} Precios desde ${fromPrice
       {updatedLabel && <span class="updated-pill">Precios actualizados {updatedLabel}</span>}
     </header>
 
-    <section class="section" style="padding-top: 6px;">
+    <section class="section" style="padding-top: 6px; padding-bottom: 0;">
+      <ComparisonTable items={categoryItems} bestAsin={bestAsin} highlights={highlights} partnerTag={PARTNER_TAG} />
+    </section>
+
+    <section class="section">
       <div class="product-grid">
         {
           categoryItems.map((item) => (

@@ -44,7 +44,7 @@ export function activeDeals(catalog, limit = 5) {
 // - "Más vendida": websiteSalesRank más bajo (lo calcula la propia Amazon).
 // Cada producto recibe como mucho una etiqueta (más vendida > calidad-precio
 // > precio), para no saturar la tarjeta si coincide en varios criterios.
-export function categoryHighlights(items) {
+function rankedPicks(items) {
   const available = items.filter((item) => item.available);
 
   const bestSeller = available
@@ -59,12 +59,27 @@ export function categoryHighlights(items) {
     .filter((item) => item.priceAmount != null)
     .sort((a, b) => a.priceAmount - b.priceAmount)[0];
 
+  return { bestSeller, bestValue, bestPrice };
+}
+
+export function categoryHighlights(items) {
+  const { bestSeller, bestValue, bestPrice } = rankedPicks(items);
+
   const labels = {};
   if (bestSeller) labels[bestSeller.asin] = "Más vendida";
   if (bestValue && !labels[bestValue.asin]) labels[bestValue.asin] = "Mejor calidad-precio";
   if (bestPrice && !labels[bestPrice.asin]) labels[bestPrice.asin] = "Mejor precio";
 
   return labels;
+}
+
+// Producto que encabeza la tabla comparativa ("Mejor opción"), con la misma
+// prioridad objetiva que categoryHighlights (más vendida > calidad-precio >
+// precio). Si ningún producto tiene datos suficientes para decidir, cae al
+// primero de la lista tal cual venga de la API, sin opinión editorial.
+export function pickBestAsin(items) {
+  const { bestSeller, bestValue, bestPrice } = rankedPicks(items);
+  return (bestSeller ?? bestValue ?? bestPrice ?? items[0])?.asin ?? null;
 }
 
 // Elemento señal del sitio: posición del precio de un producto dentro del
