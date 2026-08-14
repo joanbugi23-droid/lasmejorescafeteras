@@ -18,8 +18,6 @@ pnpm-debug.log*
 .env.production
 .env.local
 
-# precios generados por scripts/fetch-prices.mjs (se regeneran en cada build)
-src/data/prices.generated.json
 
 # macOS-specific files
 .DS_Store

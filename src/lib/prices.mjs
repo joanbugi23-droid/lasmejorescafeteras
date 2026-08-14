@@ -15,8 +15,8 @@ export function loadPrices() {
   }
 }
 
-// Fecha del dato más reciente entre los precios cargados, formateada en es-ES.
-// Nunca se escribe a mano: sale del propio momento en que se consultó la PA-API.
+// Texto relativo ("hoy", "ayer", "hace X días") a partir del dato más reciente
+// entre los precios cargados. Se genera solo a partir de fetchedAt, nunca a mano.
 export function lastUpdatedLabel(prices) {
   const timestamps = Object.values(prices)
     .map((p) => p?.fetchedAt)
@@ -26,5 +26,9 @@ export function lastUpdatedLabel(prices) {
   if (timestamps.length === 0) return null;
 
   const latest = new Date(Math.max(...timestamps));
-  return new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(latest);
+  const days = Math.floor((Date.now() - latest.getTime()) / (1000 * 60 * 60 * 24));
+
+  if (days <= 0) return "hoy";
+  if (days === 1) return "ayer";
+  return `hace ${days} días`;
 }

@@ -1,7 +1,9 @@
 ---
 import categories from "../data/categories.json";
+import tops from "../data/tops.json";
 
 const { pathname } = Astro.url;
+const latestTop = tops[tops.length - 1];
 ---
 
 <header class="site-header">
@@ -21,6 +23,16 @@ const { pathname } = Astro.url;
             {cat.shortTitle}
           </a>
         ))
+      }
+      {
+        latestTop && (
+          <a
+            href={`/top-cafeteras-${latestTop.year}/`}
+            aria-current={pathname === `/top-cafeteras-${latestTop.year}/` ? "page" : undefined}
+          >
+            Top {latestTop.year}
+          </a>
+        )
       }
     </nav>
   </div>

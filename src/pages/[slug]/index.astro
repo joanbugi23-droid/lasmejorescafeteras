@@ -28,10 +28,29 @@ const updatedLabel = lastUpdatedLabel(prices);
       <a href="/">Inicio</a> / {category.shortTitle}
     </nav>
 
-    <section class="section" style="padding-top: 18px;">
-      <h1 class="section-title">{category.title}</h1>
+    <header class="page-hero">
+      <h1>{category.title}</h1>
+      {updatedLabel && <span class="updated-pill">Precios actualizados {updatedLabel}</span>}
+    </header>
+
+    <section class="section" style="padding-top: 6px;">
+      <div class="product-grid">
+        {
+          categoryProducts.map((p) => (
+            <ProductCard
+              asin={p.asin}
+              data={prices[p.asin]}
+              partnerTag={PARTNER_TAG}
+              featured={p.featured}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section guide-section">
+      <h2 class="section-title">Sobre las {category.shortTitle}</h2>
       <p class="section-lead">{category.intro}</p>
-      {updatedLabel && <p class="section-lead" style="margin-top: -18px; font-size: 0.85rem;">Precios y disponibilidad actualizados el {updatedLabel}.</p>}
 
       <div class="pros-cons">
         <div class="pros">
@@ -46,19 +65,6 @@ const updatedLabel = lastUpdatedLabel(prices);
             {category.cons.map((item) => <li>{item}</li>)}
           </ul>
         </div>
-      </div>
-
-      <div class="product-grid">
-        {
-          categoryProducts.map((p) => (
-            <ProductCard
-              asin={p.asin}
-              data={prices[p.asin]}
-              partnerTag={PARTNER_TAG}
-              featured={p.featured}
-            />
-          ))
-        }
       </div>
     </section>
   </div>

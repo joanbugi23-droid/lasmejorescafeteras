@@ -1,0 +1,44 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import tops from "../../data/tops.json";
+import { loadPrices, lastUpdatedLabel } from "../../lib/prices.mjs";
+
+export function getStaticPaths() {
+  return tops.map((top) => ({
+    params: { year: String(top.year) },
+    props: { top },
+  }));
+}
+
+const { top } = Astro.props;
+const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
+const prices = loadPrices();
+const updatedLabel = lastUpdatedLabel(prices);
+---
+
+<Base
+  title={`Top Cafeteras ${top.year}: Las Más Recomendadas`}
+  description={`Selección de las mejores cafeteras de ${top.year}, con precios y disponibilidad de Amazon actualizados automáticamente.`}
+>
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Inicio</a> / Top Cafeteras {top.year}
+    </nav>
+
+    <header class="page-hero">
+      <h1>Top Cafeteras {top.year}</h1>
+      {updatedLabel && <span class="updated-pill">Precios actualizados {updatedLabel}</span>}
+    </header>
+
+    <section class="section" style="padding-top: 6px;">
+      <div class="product-grid">
+        {
+          top.asins.map((asin) => (
+            <ProductCard asin={asin} data={prices[asin]} partnerTag={PARTNER_TAG} featured />
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</Base>

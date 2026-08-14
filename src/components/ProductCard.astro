@@ -5,8 +5,12 @@ interface Props {
     title?: string | null;
     image?: string | null;
     price?: string | null;
+    previousPrice?: string | null;
+    discountPercent?: number | null;
     available?: boolean;
     availabilityMessage?: string | null;
+    starRating?: number | null;
+    reviewCount?: number | null;
     url?: string | null;
   } | null;
   partnerTag: string;
@@ -20,31 +24,45 @@ const image = data?.image ?? null;
 const url = data?.url ?? `https://www.amazon.es/dp/${asin}?tag=${partnerTag}`;
 const available = data?.available ?? true;
 const price = data?.price ?? null;
+const previousPrice = available ? data?.previousPrice ?? null : null;
+const discountPercent = available ? data?.discountPercent ?? null : null;
+const starRating = data?.starRating ?? null;
+const reviewCount = data?.reviewCount ?? null;
+const fullStars = starRating ? Math.round(starRating) : 0;
 ---
 
-<article class="product-card">
-  {featured && <span class="badge">Recomendada</span>}
+<article class:list={["product-card", { "is-unavailable": !available }]}>
+  {featured && available && <span class="badge">Recomendada</span>}
+  {discountPercent && <span class="badge badge-discount">-{discountPercent}%</span>}
   <div class="thumb">
-    {
-      image ? (
-        <img src={image} alt={title} loading="lazy" />
-      ) : (
-        <span aria-hidden="true">☕</span>
-      )
-    }
+    {image ? <img src={image} alt={title} loading="lazy" /> : <div class="thumb-empty" aria-hidden="true" />}
   </div>
   <div class="body">
     <h3>{title}</h3>
     {
-      price ? (
-        <div class="price">{price}</div>
-      ) : (
-        <div class="price unavailable">
-          {available ? "Ver precio actual en Amazon" : "No disponible actualmente"}
+      starRating && (
+        <div class="rating" aria-label={`${starRating} de 5 estrellas`}>
+          <span class="stars" aria-hidden="true">
+            {"★".repeat(fullStars)}
+            {"☆".repeat(5 - fullStars)}
+          </span>
+          {reviewCount && <span class="review-count">({reviewCount})</span>}
         </div>
       )
     }
-    {data?.availabilityMessage && <div class="availability">{data.availabilityMessage}</div>}
+    {
+      !available ? (
+        <div class="price unavailable">No disponible actualmente</div>
+      ) : price ? (
+        <div class="price-row">
+          <span class="price">{price}</span>
+          {previousPrice && <span class="price-before">{previousPrice}</span>}
+        </div>
+      ) : (
+        <div class="price unavailable">Ver precio actual en Amazon</div>
+      )
+    }
+    {available && data?.availabilityMessage && <div class="availability">{data.availabilityMessage}</div>}
     <a class="cta" href={url} target="_blank" rel="nofollow sponsored noopener">
       Ver en Amazon
     </a>

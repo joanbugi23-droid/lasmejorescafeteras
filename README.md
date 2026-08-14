@@ -32,15 +32,23 @@ automático se encarga de consultar el precio real y publicar el sitio.
 ## Cómo se actualizan los precios
 
 `scripts/fetch-prices.mjs` pide un token OAuth (client_credentials) y llama a
-`getItems` de Creators API por cada ASIN único de `products.json`, generando
-`src/data/prices.generated.json`, que las páginas usan al construirse. No depende
+`getItems` de Creators API por cada ASIN único de `products.json`. No depende
 de ninguna librería de terceros, solo `fetch` nativo de Node.
+
+**`src/data/prices.generated.json` es una cache persistente que se sube al
+repositorio** (no es un archivo temporal). Cada ejecución solo sobrescribe los
+ASINs para los que la API respondió con éxito; si un ASIN falla (API caída,
+cuenta no elegible todavía, error puntual...) se conserva el último dato válido
+guardado, así la web nunca muestra un hueco vacío ni datos rotos. El workflow
+hace commit automático de ese archivo cuando cambia (con `[skip ci]` en el
+mensaje para no disparar despliegues en bucle).
 
 **Requisito de elegibilidad de Amazon**: para poder llamar a la API hacen falta
 al menos **10 ventas válidas en los últimos 30 días** en la cuenta de Afiliado
-(puede tardar hasta 48h en activarse tras crear la credencial). Si no se cumple,
-la API devuelve el error `AssociateNotEligible` y el script lo deja escrito en
-el log sin romper el despliegue (conserva los precios ya guardados).
+(puede tardar hasta 48h en activarse tras crear la credencial). Mientras no se
+cumpla, la API devuelve el error `AssociateNotEligible`, el script lo deja
+escrito en el log y no toca la cache — el sitio sigue funcionando con los
+últimos datos que tenga (o con el enlace directo a Amazon si aún no hay ninguno).
 
 Este script se ejecuta automáticamente **cada día a las 06:00 UTC** mediante GitHub
 Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)), y también

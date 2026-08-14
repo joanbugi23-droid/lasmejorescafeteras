@@ -3,62 +3,52 @@ import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
 import categories from "../data/categories.json";
 import products from "../data/products.json";
+import tops from "../data/tops.json";
 import { loadPrices, lastUpdatedLabel } from "../lib/prices.mjs";
+import { representativeImage, activeDeals } from "../lib/catalog.mjs";
 
 const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
 const prices = loadPrices();
 const updatedLabel = lastUpdatedLabel(prices);
 
 const featured = products.filter((p) => p.featured);
-
-const categoryIcons = {
-  "las-mejores-cafeteras-italianas": "🫖",
-  "las-mejores-cafeteras-express": "☕",
-  "las-mejores-cafeteras-superautomaticas": "⚙️",
-  "las-mejores-cafeteras-de-grano": "🌱",
-  "las-mejores-cafeteras-de-capsulas": "💊",
-};
+const deals = activeDeals(products, prices);
+const currentYear = new Date().getFullYear();
+const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length - 1];
 ---
 
 <Base
   title="Las Mejores Cafeteras | Guía de compra y precios actualizados"
   description="Comparativas y recomendaciones de las mejores cafeteras italianas, express, superautomáticas, de grano y de cápsulas, con precios de Amazon actualizados automáticamente."
 >
-  <section class="hero">
-    <div class="container">
-      <h1>Encuentra la Cafetera Perfecta para Ti</h1>
-      <p>
-        Analizamos cafeteras italianas, express, superautomáticas, de grano y de cápsulas
-        para ayudarte a elegir con confianza. Los precios se actualizan automáticamente
-        cada día directamente desde Amazon.
-      </p>
-      <p class="disclosure">
-        Como Afiliados de Amazon, obtenemos ingresos por las compras que cumplen los requisitos aplicables.
-        {updatedLabel && <> · Precios actualizados el {updatedLabel}.</>}
-      </p>
-    </div>
-  </section>
-
   <div class="container">
-    <div class="category-grid">
+    <header class="page-hero">
+      <h1>Las Mejores Cafeteras</h1>
+      {updatedLabel && <span class="updated-pill">Precios actualizados {updatedLabel}</span>}
+    </header>
+
+    <nav class="category-grid" aria-label="Categorías de cafeteras">
       {
-        categories.map((cat) => (
-          <a class="category-card" href={`/${cat.slug}/`}>
-            <span class="icon">{categoryIcons[cat.slug]}</span>
-            <h3>{cat.shortTitle}</h3>
-            <p>{cat.intro.slice(0, 90)}…</p>
-          </a>
-        ))
+        categories.map((cat) => {
+          const image = representativeImage(cat.slug, products, prices);
+          return (
+            <a class="category-card" href={`/${cat.slug}/`}>
+              <div class="category-card-photo">
+                {image ? <img src={image} alt={cat.shortTitle} loading="lazy" /> : <div class="thumb-empty" />}
+              </div>
+              <h3>{cat.shortTitle}</h3>
+            </a>
+          );
+        })
       }
-    </div>
+    </nav>
 
     {
       featured.length > 0 && (
-        <section class="section">
-          <h2 class="section-title">Las Cafeteras que Más Recomendamos</h2>
-          <p class="section-lead">
-            Una selección de nuestras favoritas entre todas las categorías, por calidad, prestaciones y opiniones.
-          </p>
+        <section class="section" aria-labelledby="top-heading">
+          <h2 class="section-title" id="top-heading">
+            Top Cafeteras
+          </h2>
           <div class="product-grid">
             {featured.map((p) => (
               <ProductCard asin={p.asin} data={prices[p.asin]} partnerTag={PARTNER_TAG} featured />
@@ -67,5 +57,89 @@ const categoryIcons = {
         </section>
       )
     }
+
+    {
+      deals.length > 0 && (
+        <section class="section" aria-labelledby="deals-heading">
+          <h2 class="section-title" id="deals-heading">
+            Ofertas del Mes
+          </h2>
+          <div class="product-grid">
+            {deals.map((p) => (
+              <ProductCard asin={p.asin} data={p.data} partnerTag={PARTNER_TAG} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      featured.length > 0 && (
+        <section class="section" aria-labelledby="compare-heading">
+          <h2 class="section-title" id="compare-heading">
+            Comparativa Rápida
+          </h2>
+          <div class="compare-table-wrap">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Valoración</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {featured.map((p) => {
+                  const data = prices[p.asin];
+                  const url = data?.url ?? `https://www.amazon.es/dp/${p.asin}?tag=${PARTNER_TAG}`;
+                  return (
+                    <tr>
+                      <td class="compare-photo">
+                        {data?.image ? <img src={data.image} alt={data?.title ?? ""} loading="lazy" /> : <div class="thumb-empty" />}
+                      </td>
+                      <td>{data?.title ?? "Ver ficha en Amazon"}</td>
+                      <td>{data?.available === false ? "No disponible" : data?.price ?? "Ver en Amazon"}</td>
+                      <td>{data?.starRating ? `★ ${data.starRating}${data.reviewCount ? ` (${data.reviewCount})` : ""}` : "—"}</td>
+                      <td>
+                        <a href={url} target="_blank" rel="nofollow sponsored noopener">
+                          Ver en Amazon
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="section guide-section">
+      <h2 class="section-title">Cómo Elegir tu Cafetera</h2>
+      <p class="section-lead">
+        Si eres un amante del café, sabes que elegir la cafetera adecuada marca la diferencia. Analizamos
+        cafeteras italianas, express, superautomáticas, de grano y de cápsulas para ayudarte a decidir según
+        cómo te gusta el café, cuánto espacio tienes y cuánto quieres implicarte en la preparación.
+      </p>
+      <p class="section-lead">
+        Explora cada categoría para ver ventajas, desventajas y los modelos disponibles ahora mismo en Amazon,
+        con precio y disponibilidad reales:
+      </p>
+      <ul class="guide-links">
+        {
+          categories.map((cat) => (
+            <li>
+              <a href={`/${cat.slug}/`}>{cat.title}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={`/top-cafeteras-${currentTop.year}/`}>Top Cafeteras {currentTop.year}</a>
+        </li>
+      </ul>
+    </section>
   </div>
 </Base>
