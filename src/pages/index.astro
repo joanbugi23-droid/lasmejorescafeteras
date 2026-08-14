@@ -65,11 +65,13 @@ const dealsItemList = deals.length > 0 ? itemListJsonLd(deals, "Ofertas del Mes"
         {
           categoryTiles.map(({ category, image }) => (
             <a class="cat-tile" href={`/${category.slug}/`}>
-              {image ? (
-                <img src={image} alt={category.shortTitle} loading="lazy" />
-              ) : (
-                <div class="cat-tile-empty" aria-hidden="true" />
-              )}
+              <span class="cat-tile-photo">
+                {image ? (
+                  <img src={image} alt={category.shortTitle} loading="lazy" />
+                ) : (
+                  <span class="cat-tile-empty" aria-hidden="true" />
+                )}
+              </span>
               <span class="cat-tile-bar">{category.shortTitle}</span>
             </a>
           ))
