@@ -2,17 +2,15 @@
 import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
 import categories from "../data/categories.json";
-import products from "../data/products.json";
 import tops from "../data/tops.json";
-import { loadPrices, lastUpdatedLabel } from "../lib/prices.mjs";
-import { representativeImage, activeDeals } from "../lib/catalog.mjs";
+import { loadCatalog, resolveItems, representativeImage, activeDeals, lastUpdatedLabel } from "../lib/catalog.mjs";
 
 const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
-const prices = loadPrices();
-const updatedLabel = lastUpdatedLabel(prices);
+const catalog = loadCatalog();
+const updatedLabel = lastUpdatedLabel(catalog.items);
 
-const featured = products.filter((p) => p.featured);
-const deals = activeDeals(products, prices);
+const top = resolveItems(catalog.top, catalog.items);
+const deals = activeDeals(catalog);
 const currentYear = new Date().getFullYear();
 const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length - 1];
 ---
@@ -30,7 +28,7 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
     <nav class="category-grid" aria-label="Categorías de cafeteras">
       {
         categories.map((cat) => {
-          const image = representativeImage(cat.slug, products, prices);
+          const image = representativeImage(cat.slug, catalog);
           return (
             <a class="category-card" href={`/${cat.slug}/`}>
               <div class="category-card-photo">
@@ -44,14 +42,14 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
     </nav>
 
     {
-      featured.length > 0 && (
+      top.length > 0 && (
         <section class="section" aria-labelledby="top-heading">
           <h2 class="section-title" id="top-heading">
             Top Cafeteras
           </h2>
           <div class="product-grid">
-            {featured.map((p) => (
-              <ProductCard asin={p.asin} data={prices[p.asin]} partnerTag={PARTNER_TAG} featured />
+            {top.map((item) => (
+              <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} featured />
             ))}
           </div>
         </section>
@@ -65,8 +63,8 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
             Ofertas del Mes
           </h2>
           <div class="product-grid">
-            {deals.map((p) => (
-              <ProductCard asin={p.asin} data={p.data} partnerTag={PARTNER_TAG} />
+            {deals.map((item) => (
+              <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} />
             ))}
           </div>
         </section>
@@ -74,7 +72,7 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
     }
 
     {
-      featured.length > 0 && (
+      top.length > 0 && (
         <section class="section" aria-labelledby="compare-heading">
           <h2 class="section-title" id="compare-heading">
             Comparativa Rápida
@@ -91,25 +89,21 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
                 </tr>
               </thead>
               <tbody>
-                {featured.map((p) => {
-                  const data = prices[p.asin];
-                  const url = data?.url ?? `https://www.amazon.es/dp/${p.asin}?tag=${PARTNER_TAG}`;
-                  return (
-                    <tr>
-                      <td class="compare-photo">
-                        {data?.image ? <img src={data.image} alt={data?.title ?? ""} loading="lazy" /> : <div class="thumb-empty" />}
-                      </td>
-                      <td>{data?.title ?? "Ver ficha en Amazon"}</td>
-                      <td>{data?.available === false ? "No disponible" : data?.price ?? "Ver en Amazon"}</td>
-                      <td>{data?.starRating ? `★ ${data.starRating}${data.reviewCount ? ` (${data.reviewCount})` : ""}` : "—"}</td>
-                      <td>
-                        <a href={url} target="_blank" rel="nofollow sponsored noopener">
-                          Ver en Amazon
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {top.map((item) => (
+                  <tr>
+                    <td class="compare-photo">
+                      {item.image ? <img src={item.image} alt={item.title ?? ""} loading="lazy" /> : <div class="thumb-empty" />}
+                    </td>
+                    <td>{item.title ?? "Ver ficha en Amazon"}</td>
+                    <td>{item.available === false ? "No disponible" : item.price ?? "Ver en Amazon"}</td>
+                    <td>{item.starRating ? `★ ${item.starRating}${item.reviewCount ? ` (${item.reviewCount})` : ""}` : "—"}</td>
+                    <td>
+                      <a href={item.url} target="_blank" rel="nofollow sponsored noopener">
+                        Ver en Amazon
+                      </a>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -136,9 +130,11 @@ const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length 
             </li>
           ))
         }
-        <li>
-          <a href={`/top-cafeteras-${currentTop.year}/`}>Top Cafeteras {currentTop.year}</a>
-        </li>
+        {currentTop && (
+          <li>
+            <a href={`/top-cafeteras-${currentTop.year}/`}>Top Cafeteras {currentTop.year}</a>
+          </li>
+        )}
       </ul>
     </section>
   </div>

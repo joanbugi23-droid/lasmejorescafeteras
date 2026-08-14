@@ -1,0 +1,12 @@
+{
+  "categories": [
+    { "slug": "las-mejores-cafeteras-italianas", "keywords": "cafetera italiana moka", "count": 5 },
+    { "slug": "las-mejores-cafeteras-express", "keywords": "cafetera express", "count": 5 },
+    { "slug": "las-mejores-cafeteras-superautomaticas", "keywords": "cafetera superautomatica", "count": 5 },
+    { "slug": "las-mejores-cafeteras-de-grano", "keywords": "cafetera de grano", "count": 5 },
+    { "slug": "las-mejores-cafeteras-de-capsulas", "keywords": "cafetera de capsulas", "count": 5 },
+    { "slug": "molinillos-de-cafe-electricos", "keywords": "molinillo de cafe electrico", "count": 5 }
+  ],
+  "top": { "keywords": "cafetera", "sortBy": "AvgCustomerReviews", "count": 5 },
+  "deals": { "keywords": "cafetera", "minSavingPercent": 15, "sortBy": "Featured", "count": 5 }
+}

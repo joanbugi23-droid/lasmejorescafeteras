@@ -88,5 +88,23 @@
       "Generan más residuos que otros métodos.",
       "Menos margen de personalización del café."
     ]
+  },
+  {
+    "slug": "molinillos-de-cafe-electricos",
+    "title": "Los Mejores Molinillos de Café Eléctricos",
+    "shortTitle": "Molinillos Eléctricos",
+    "intro": "Un molinillo eléctrico muele el café en el momento, justo antes de prepararlo, lo que mejora notablemente el aroma y el sabor frente al café ya molido. Son el complemento ideal para cafeteras italianas, express o de goteo.",
+    "pros": [
+      "Café más fresco y aromático al molerlo justo antes de prepararlo.",
+      "Control sobre el punto de molienda según el método de preparación.",
+      "Más económico a largo plazo que comprar café ya molido.",
+      "Rápidos y sin esfuerzo comparados con un molinillo manual."
+    ],
+    "cons": [
+      "Ruido durante el molido, más que un molinillo manual.",
+      "Requieren limpieza periódica para evitar que el café enrancie.",
+      "Los modelos de cuchillas dan una molienda menos uniforme que los de muelas.",
+      "Ocupan espacio adicional en la encimera."
+    ]
   }
 ]

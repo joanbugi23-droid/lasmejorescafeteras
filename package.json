@@ -7,10 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run fetch-prices && astro build",
+    "build": "npm run fetch-catalog && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-prices": "node --env-file-if-exists=.env scripts/fetch-prices.mjs"
+    "fetch-catalog": "node --env-file-if-exists=.env scripts/fetch-catalog.mjs"
   },
   "dependencies": {
     "astro": "^7.2.0"

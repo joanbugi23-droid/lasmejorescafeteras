@@ -8,40 +8,46 @@ de la **Amazon Creators API** — no se editan a mano.
 > retiró el 15/05/2026. Amazon la sustituyó por Creators API, que usa credenciales
 > OAuth (Client ID + Client Secret) en vez de claves AWS.
 
-## Cómo añadir una cafetera nueva
+## Cómo se eligen los productos de cada categoría
 
-Abre [`src/data/products.json`](src/data/products.json) y añade una línea con el ASIN
-del producto (lo sacas de la URL de Amazon, ej. `amazon.es/dp/B0CCDBVYQ7`) y la
-categoría a la que pertenece:
+**Método principal — automático**: cada categoría se rellena sola llamando a
+`SearchItems` de Creators API con una palabra clave (ej. "cafetera express"),
+ordenado por reseñas/relevancia. Las palabras clave están en
+[`src/data/searchQueries.json`](src/data/searchQueries.json). Si Amazon empieza
+a vender bien un modelo nuevo, aparecerá solo — no hay que tocar nada.
+
+Para añadir una categoría nueva (por ejemplo otro tipo de cafetera), solo hace
+falta:
+1. Una entrada en [`src/data/categories.json`](src/data/categories.json) (título, intro, pros/contras).
+2. Una entrada en [`src/data/searchQueries.json`](src/data/searchQueries.json) con la palabra clave a buscar.
+
+**Método secundario — forzar un producto puntual**: si quieres que aparezca
+sí o sí un producto concreto, añade su ASIN en
+[`src/data/products.json`](src/data/products.json):
 
 ```json
 { "asin": "B0XXXXXXXX", "category": "las-mejores-cafeteras-express" }
 ```
 
-Categorías disponibles (ver [`src/data/categories.json`](src/data/categories.json)):
-`las-mejores-cafeteras-italianas`, `las-mejores-cafeteras-express`,
-`las-mejores-cafeteras-superautomaticas`, `las-mejores-cafeteras-de-grano`,
-`las-mejores-cafeteras-de-capsulas`.
+Estos ASINs "forzados" van siempre primero en su categoría, antes que los
+resultados de la búsqueda automática.
 
-Añade `"featured": true` si quieres que también aparezca en el bloque
-"Las Cafeteras que Más Recomendamos" de la portada.
+## Cómo se actualizan los precios y el catálogo
 
-Guarda y sube el cambio a `main` (o pide que lo haga por ti). El despliegue
-automático se encarga de consultar el precio real y publicar el sitio.
+`scripts/fetch-catalog.mjs` pide un token OAuth (client_credentials) y llama a
+`searchItems` (una vez por categoría, más "Top Cafeteras" y "Ofertas del mes")
+y a `getItems` (para los ASINs forzados y las páginas "Top Cafeteras {año}").
+No depende de ninguna librería de terceros, solo `fetch` nativo de Node.
 
-## Cómo se actualizan los precios
-
-`scripts/fetch-prices.mjs` pide un token OAuth (client_credentials) y llama a
-`getItems` de Creators API por cada ASIN único de `products.json`. No depende
-de ninguna librería de terceros, solo `fetch` nativo de Node.
-
-**`src/data/prices.generated.json` es una cache persistente que se sube al
-repositorio** (no es un archivo temporal). Cada ejecución solo sobrescribe los
-ASINs para los que la API respondió con éxito; si un ASIN falla (API caída,
-cuenta no elegible todavía, error puntual...) se conserva el último dato válido
-guardado, así la web nunca muestra un hueco vacío ni datos rotos. El workflow
-hace commit automático de ese archivo cuando cambia (con `[skip ci]` en el
-mensaje para no disparar despliegues en bucle).
+**`src/data/catalog.generated.json` es una cache persistente que se sube al
+repositorio** (no es un archivo temporal): guarda los datos de cada producto
+(precio, descuento, disponibilidad, valoración, imagen...) y qué ASINs
+componen cada categoría / el Top / las ofertas. Cada ejecución solo sobrescribe
+lo que la API respondió con éxito esa vez; si una búsqueda o un ASIN falla (API
+caída, cuenta no elegible todavía, error puntual...) se conserva el último dato
+válido guardado, así la web nunca se queda sin productos ni muestra datos
+rotos. El workflow hace commit automático de ese archivo cuando cambia (con
+`[skip ci]` en el mensaje para no disparar despliegues en bucle).
 
 **Requisito de elegibilidad de Amazon**: para poder llamar a la API hacen falta
 al menos **10 ventas válidas en los últimos 30 días** en la cuenta de Afiliado
@@ -55,6 +61,17 @@ Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)), y tamb
 cada vez que se sube un cambio a `main`. Después del refresco, reconstruye el sitio
 y lo despliega en Cloudflare Pages.
 
+## Páginas "Top Cafeteras {año}"
+
+Se crean una vez al año, con una lista fija de ASINs elegidos a mano en
+[`src/data/tops.json`](src/data/tops.json) — dentro de cada una, el precio y
+la disponibilidad se siguen actualizando solos vía API. Para crear la de un
+año nuevo, añade una entrada nueva a ese archivo:
+
+```json
+{ "year": 2027, "asins": ["B0XXXXXXXX", "..."] }
+```
+
 ## Desarrollo local
 
 ```bash
@@ -67,7 +84,7 @@ Para probar la actualización de precios en tu máquina, copia `.env.example` a
 repositorio):
 
 ```bash
-npm run fetch-prices
+npm run fetch-catalog
 ```
 
 ## Desplegar en producción (`lasmejorescafeteras.com`, dominio en Hostinger)

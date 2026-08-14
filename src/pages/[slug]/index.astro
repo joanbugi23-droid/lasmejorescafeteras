@@ -2,8 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import categories from "../../data/categories.json";
-import products from "../../data/products.json";
-import { loadPrices, lastUpdatedLabel } from "../../lib/prices.mjs";
+import { loadCatalog, resolveItems, lastUpdatedLabel } from "../../lib/catalog.mjs";
 
 export function getStaticPaths() {
   return categories.map((cat) => ({
@@ -14,9 +13,9 @@ export function getStaticPaths() {
 
 const { category } = Astro.props;
 const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
-const prices = loadPrices();
-const categoryProducts = products.filter((p) => p.category === category.slug);
-const updatedLabel = lastUpdatedLabel(prices);
+const catalog = loadCatalog();
+const categoryItems = resolveItems(catalog.categories[category.slug], catalog.items);
+const updatedLabel = lastUpdatedLabel(catalog.items);
 ---
 
 <Base
@@ -36,20 +35,15 @@ const updatedLabel = lastUpdatedLabel(prices);
     <section class="section" style="padding-top: 6px;">
       <div class="product-grid">
         {
-          categoryProducts.map((p) => (
-            <ProductCard
-              asin={p.asin}
-              data={prices[p.asin]}
-              partnerTag={PARTNER_TAG}
-              featured={p.featured}
-            />
+          categoryItems.map((item) => (
+            <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} />
           ))
         }
       </div>
     </section>
 
     <section class="section guide-section">
-      <h2 class="section-title">Sobre las {category.shortTitle}</h2>
+      <h2 class="section-title">Guía de Compra: {category.shortTitle}</h2>
       <p class="section-lead">{category.intro}</p>
 
       <div class="pros-cons">

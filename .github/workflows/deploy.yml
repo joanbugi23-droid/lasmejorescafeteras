@@ -27,23 +27,23 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Refrescar precios desde Amazon Creators API
+      - name: Rellenar catálogo desde Amazon Creators API (SearchItems + GetItems)
         env:
           AMAZON_CREDENTIAL_ID: ${{ secrets.AMAZON_CREDENTIAL_ID }}
           AMAZON_CREDENTIAL_SECRET: ${{ secrets.AMAZON_CREDENTIAL_SECRET }}
           AMAZON_PARTNER_TAG: ${{ secrets.AMAZON_PARTNER_TAG }}
-        run: npm run fetch-prices
+        run: npm run fetch-catalog
 
-      - name: Guardar cache de precios en el repositorio
+      - name: Guardar cache de catálogo en el repositorio
         run: |
-          if ! git diff --quiet -- src/data/prices.generated.json; then
+          if ! git diff --quiet -- src/data/catalog.generated.json; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add src/data/prices.generated.json
-            git commit -m "chore: actualizar cache de precios [skip ci]"
+            git add src/data/catalog.generated.json
+            git commit -m "chore: actualizar catalogo de productos [skip ci]"
             git push
           else
-            echo "Sin cambios en la cache de precios."
+            echo "Sin cambios en el catálogo."
           fi
 
       - name: Construir sitio estático

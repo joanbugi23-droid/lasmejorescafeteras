@@ -2,7 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import tops from "../../data/tops.json";
-import { loadPrices, lastUpdatedLabel } from "../../lib/prices.mjs";
+import { loadCatalog, resolveItems, lastUpdatedLabel } from "../../lib/catalog.mjs";
 
 export function getStaticPaths() {
   return tops.map((top) => ({
@@ -13,8 +13,9 @@ export function getStaticPaths() {
 
 const { top } = Astro.props;
 const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
-const prices = loadPrices();
-const updatedLabel = lastUpdatedLabel(prices);
+const catalog = loadCatalog();
+const items = resolveItems(top.asins, catalog.items);
+const updatedLabel = lastUpdatedLabel(catalog.items);
 ---
 
 <Base
@@ -34,8 +35,8 @@ const updatedLabel = lastUpdatedLabel(prices);
     <section class="section" style="padding-top: 6px;">
       <div class="product-grid">
         {
-          top.asins.map((asin) => (
-            <ProductCard asin={asin} data={prices[asin]} partnerTag={PARTNER_TAG} featured />
+          items.map((item) => (
+            <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} featured />
           ))
         }
       </div>
