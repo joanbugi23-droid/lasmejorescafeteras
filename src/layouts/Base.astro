@@ -15,6 +15,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 <html lang="es">
   <head>
+    <script is:inline>
+      // Cada pagina (nueva o recargada, incluido volver con "atras") debe
+      // abrir siempre arriba del todo, sin conservar el scroll anterior.
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+      window.addEventListener("pageshow", () => window.scrollTo(0, 0));
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
