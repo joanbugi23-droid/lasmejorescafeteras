@@ -545,6 +545,15 @@ a {
   color: var(--cream);
 }
 
+.product-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card h3 a:hover {
+  color: var(--amber-soft);
+}
+
 .product-card .price-row {
   display: flex;
   align-items: baseline;
@@ -724,6 +733,16 @@ a {
 
 .site-footer a {
   color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.footer-links a:hover {
+  color: var(--amber-soft);
 }
 
 .site-footer .fine-print {

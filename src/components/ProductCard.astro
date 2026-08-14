@@ -46,11 +46,15 @@ const fullStars = starRating ? Math.round(starRating) : 0;
       </div>
     )
   }
-  <div class="thumb">
+  <a class="thumb" href={url} target="_blank" rel="nofollow sponsored noopener" aria-hidden="true" tabindex="-1">
     {image ? <img src={image} alt={title} loading="lazy" /> : <div class="thumb-empty" aria-hidden="true" />}
-  </div>
+  </a>
   <div class="body">
-    <h3>{title}</h3>
+    <h3>
+      <a href={url} target="_blank" rel="nofollow sponsored noopener">
+        {title}
+      </a>
+    </h3>
     {
       starRating && (
         <div class="rating" aria-label={`${starRating} de 5 estrellas`}>

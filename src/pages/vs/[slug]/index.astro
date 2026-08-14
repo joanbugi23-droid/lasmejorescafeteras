@@ -1,0 +1,111 @@
+---
+import Base from "../../../layouts/Base.astro";
+import ProductCard from "../../../components/ProductCard.astro";
+import JsonLd from "../../../components/JsonLd.astro";
+import comparisons from "../../../data/comparisons.json";
+import categories from "../../../data/categories.json";
+import { loadCatalog, priceGauge, lastUpdatedLabel } from "../../../lib/catalog.mjs";
+import { breadcrumbJsonLd, itemListJsonLd } from "../../../lib/seo.mjs";
+
+export function getStaticPaths() {
+  return comparisons.map((cmp) => ({
+    params: { slug: cmp.slug },
+    props: { comparison: cmp },
+  }));
+}
+
+const { comparison } = Astro.props;
+const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
+const catalog = loadCatalog();
+const itemA = catalog.items[comparison.asinA];
+const itemB = catalog.items[comparison.asinB];
+const pair = [itemA, itemB].filter(Boolean);
+const updatedLabel = lastUpdatedLabel(catalog.items);
+const relatedCategory = categories.find((c) => c.slug === comparison.relatedCategory);
+
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: comparison.title, path: `/vs/${comparison.slug}/` },
+]);
+const itemList = pair.length > 0 ? itemListJsonLd(pair, comparison.title) : null;
+---
+
+<Base
+  title={`${comparison.title}: Comparativa Cara a Cara`}
+  description={comparison.intro}
+  image={itemA?.image ?? itemB?.image}
+>
+  <JsonLd data={breadcrumbs} />
+  {itemList && <JsonLd data={itemList} />}
+
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Inicio</a> / {comparison.title}
+    </nav>
+
+    <header class="page-hero">
+      <h1>{comparison.title}</h1>
+      {updatedLabel && <span class="updated-pill">Precios actualizados {updatedLabel}</span>}
+    </header>
+
+    <section class="section" style="padding-top: 6px;">
+      <p class="section-lead">{comparison.intro}</p>
+
+      <div class="product-grid">
+        {itemA && <ProductCard asin={itemA.asin} data={itemA} partnerTag={PARTNER_TAG} gauge={priceGauge(itemA, pair)} />}
+        {itemB && <ProductCard asin={itemB.asin} data={itemB} partnerTag={PARTNER_TAG} gauge={priceGauge(itemB, pair)} />}
+      </div>
+
+      {
+        pair.length === 2 && (
+          <div class="compare-table-wrap" style="margin-top: 24px;">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">{itemA.title}</th>
+                  <th scope="col">{itemB.title}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Precio</td>
+                  <td>{itemA.available === false ? "No disponible" : itemA.price ?? "Ver en Amazon"}</td>
+                  <td>{itemB.available === false ? "No disponible" : itemB.price ?? "Ver en Amazon"}</td>
+                </tr>
+                <tr>
+                  <td>Valoración</td>
+                  <td>{itemA.starRating ? `★ ${itemA.starRating}${itemA.reviewCount ? ` (${itemA.reviewCount})` : ""}` : "—"}</td>
+                  <td>{itemB.starRating ? `★ ${itemB.starRating}${itemB.reviewCount ? ` (${itemB.reviewCount})` : ""}` : "—"}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <a href={itemA.url} target="_blank" rel="nofollow sponsored noopener">
+                      Ver en Amazon
+                    </a>
+                  </td>
+                  <td>
+                    <a href={itemB.url} target="_blank" rel="nofollow sponsored noopener">
+                      Ver en Amazon
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+    </section>
+
+    {
+      relatedCategory && (
+        <section class="section guide-section">
+          <p class="section-lead">
+            Consulta también todas las <a href={`/${relatedCategory.slug}/`}>{relatedCategory.shortTitle.toLowerCase()}</a> que comparamos, con precio y disponibilidad actualizados a diario.
+          </p>
+        </section>
+      )
+    }
+  </div>
+</Base>

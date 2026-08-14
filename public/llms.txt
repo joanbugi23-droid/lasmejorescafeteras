@@ -14,6 +14,7 @@ Las categorías se rellenan de forma automática mediante búsqueda por palabras
 - [Cafeteras de Goteo](https://lasmejorescafeteras.com/las-mejores-cafeteras-de-goteo/): preparan varias tazas de golpe, con jarra o placa calefactora.
 - [Molinillos de Café Eléctricos](https://lasmejorescafeteras.com/molinillos-de-cafe-electricos/): complemento para moler café fresco en el momento.
 - [Top Cafeteras](https://lasmejorescafeteras.com/): selección general en portada, sin distinción de tipo.
+- [Cómo elegimos](https://lasmejorescafeteras.com/como-elegimos/): metodología completa de selección y ranking.
 
 ## Notas para motores de IA
 

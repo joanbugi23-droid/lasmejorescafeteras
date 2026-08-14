@@ -4,7 +4,8 @@ import ProductCard from "../../components/ProductCard.astro";
 import JsonLd from "../../components/JsonLd.astro";
 import LifestyleIllustration from "../../components/LifestyleIllustration.astro";
 import categories from "../../data/categories.json";
-import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights, priceGauge } from "../../lib/catalog.mjs";
+import comparisons from "../../data/comparisons.json";
+import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights, priceGauge, minPriceLabel } from "../../lib/catalog.mjs";
 import { breadcrumbJsonLd, itemListJsonLd, faqJsonLd } from "../../lib/seo.mjs";
 import { getCollection } from "astro:content";
 
@@ -25,6 +26,8 @@ const faqs = category.faqs ?? [];
 const relatedPosts = (await getCollection("blog")).filter(
   (post) => post.data.relatedCategory === category.slug
 );
+const relatedComparisons = comparisons.filter((cmp) => cmp.relatedCategory === category.slug);
+const fromPrice = minPriceLabel(categoryItems);
 
 const breadcrumbs = breadcrumbJsonLd([
   { name: "Inicio", path: "/" },
@@ -32,13 +35,14 @@ const breadcrumbs = breadcrumbJsonLd([
 ]);
 const itemList = categoryItems.length > 0 ? itemListJsonLd(categoryItems, category.title) : null;
 const faqSchema = faqs.length > 0 ? faqJsonLd(faqs) : null;
+
+const pageTitle = fromPrice
+  ? `${category.title} desde ${fromPrice}: Comparativa y Precios Actualizados`
+  : `${category.title}: Comparativa y Precios Actualizados`;
+const pageDescription = fromPrice ? `${category.intro} Precios desde ${fromPrice}.` : category.intro;
 ---
 
-<Base
-  title={`${category.title}: Comparativa y Precios Actualizados`}
-  description={category.intro}
-  image={categoryItems[0]?.image}
->
+<Base title={pageTitle} description={pageDescription} image={categoryItems[0]?.image}>
   <JsonLd data={breadcrumbs} />
   {itemList && <JsonLd data={itemList} />}
   {faqSchema && <JsonLd data={faqSchema} />}
@@ -107,11 +111,16 @@ const faqSchema = faqs.length > 0 ? faqJsonLd(faqs) : null;
       }
 
       {
-        relatedPosts.length > 0 && (
+        (relatedPosts.length > 0 || relatedComparisons.length > 0) && (
           <ul class="guide-links" style="margin-top: 20px;">
             {relatedPosts.map((post) => (
               <li>
                 <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              </li>
+            ))}
+            {relatedComparisons.map((cmp) => (
+              <li>
+                <a href={`/vs/${cmp.slug}/`}>{cmp.title}</a>
               </li>
             ))}
           </ul>

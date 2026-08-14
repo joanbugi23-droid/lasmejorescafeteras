@@ -1,0 +1,78 @@
+---
+import Base from "../../layouts/Base.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { breadcrumbJsonLd } from "../../lib/seo.mjs";
+
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: "Cómo elegimos", path: "/como-elegimos/" },
+]);
+---
+
+<Base
+  title="Cómo Elegimos las Cafeteras que Recomendamos"
+  description="Nuestra metodología: cómo se seleccionan y ordenan las cafeteras de este sitio, con datos reales de Amazon actualizados a diario, sin opinión editorial."
+>
+  <JsonLd data={breadcrumbs} />
+
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Inicio</a> / Cómo elegimos
+    </nav>
+
+    <header class="page-hero">
+      <h1>Cómo Elegimos las Cafeteras que Recomendamos</h1>
+    </header>
+
+    <section class="section guide-section" style="border-top: none; padding-top: 6px;">
+      <p class="section-lead">
+        No escribimos a mano cuál es "la mejor" cafetera. Cada recomendación de este sitio sale de datos
+        objetivos que nos da la propia API de Amazon, actualizados automáticamente. Así es exactamente
+        como funciona:
+      </p>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <h3>Cómo se eligen los productos de cada categoría</h3>
+          <ul>
+            <li>Cada categoría (italianas, express, superautomáticas, de grano, de cápsulas, de goteo, molinillos) se rellena buscando por palabra clave directamente en el catálogo de Amazon, ordenado por valoración media de los compradores.</li>
+            <li>Si un modelo nuevo empieza a venderse bien y a recibir buenas reseñas, aparece solo — nadie decide a mano qué producto entra o sale.</li>
+            <li>Solo forzamos un producto puntual cuando queremos asegurarnos de que aparezca un modelo concreto; en ese caso también se marca y se sigue mostrando con datos reales de Amazon en cuanto están disponibles.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h3>Cómo se calculan los destacados</h3>
+          <ul>
+            <li><strong>Mejor precio</strong>: el precio actual más bajo de la categoría en ese momento.</li>
+            <li><strong>Mejor relación calidad-precio</strong>: el mayor ratio entre valoración media y precio.</li>
+            <li><strong>Más vendida</strong>: el ranking de ventas (<em>sales rank</em>) que calcula y cede la propia Amazon, no una estimación nuestra.</li>
+            <li>Un producto puede llevar como mucho una etiqueta de estas para no saturar la ficha, y siempre prioriza el criterio más objetivo (ventas reales por delante de una fórmula calculada por nosotros).</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="section-title">Datos siempre actualizados, nunca escritos a mano</h2>
+      <p class="section-lead">
+        Precio, disponibilidad, valoración e imagen se consultan automáticamente cada día en la API de
+        Amazon. Si en algún momento la consulta falla (por ejemplo, mientras la cuenta no cumple los
+        requisitos de elegibilidad de Amazon, o por un corte puntual), mostramos el último dato válido
+        guardado en vez de dejar un hueco vacío o un dato roto — nunca inventamos un precio ni lo dejamos
+        desactualizado sin avisar.
+      </p>
+      <p class="section-lead">
+        Cuando un producto se añade y la API todavía no tiene datos para él, la foto y el título pueden
+        venir de una consulta puntual y única a su ficha en Amazon (nunca repetida de forma automática);
+        si en ese caso también mostramos un precio, aparece marcado como <strong>"precio provisional"</strong> hasta
+        que la API pueda confirmarlo por sí sola.
+      </p>
+
+      <h2 class="section-title">Cómo nos financiamos</h2>
+      <p class="section-lead">
+        Participamos en el Programa de Afiliados de Amazon (Amazon Associates): obtenemos una comisión por
+        las compras que cumplen los requisitos aplicables cuando alguien compra a través de nuestros
+        enlaces, sin coste adicional para quien compra. Esto no cambia qué producto se muestra ni en qué
+        orden — el criterio siempre es el descrito arriba, no la comisión que paga cada producto.
+      </p>
+    </section>
+  </div>
+</Base>

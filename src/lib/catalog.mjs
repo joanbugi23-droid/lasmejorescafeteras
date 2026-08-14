@@ -96,6 +96,18 @@ export function rankBadges(items) {
   return labels;
 }
 
+// Precio más bajo disponible en un grupo de productos, formateado en
+// es-ES (ej. "24,60 €"), para usar en title/meta ("desde X €"). Se genera
+// solo a partir de datos reales; si todavía no hay ningún precio, no se
+// escribe ninguna cifra.
+const EUR_FORMATTER = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
+
+export function minPriceLabel(items) {
+  const prices = items.filter((item) => item.available).map((item) => item.priceAmount).filter((p) => p != null);
+  if (prices.length === 0) return null;
+  return EUR_FORMATTER.format(Math.min(...prices));
+}
+
 // Texto relativo ("hoy", "ayer", "hace X días") a partir del dato más
 // reciente en cache. Se genera solo a partir de fetchedAt, nunca a mano.
 export function lastUpdatedLabel(items) {
