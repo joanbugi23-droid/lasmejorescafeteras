@@ -675,6 +675,17 @@ tr.compare-best .compare-cta-cell {
   animation: price-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
+.product-card .price-before-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.product-card .price-before-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
 .product-card .price-before {
   font-family: var(--font-data);
   font-variant-numeric: tabular-nums;
@@ -710,8 +721,16 @@ tr.compare-best .compare-cta-cell {
 }
 
 .product-card .availability {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.78rem;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--ok);
+}
+
+.product-card .availability-icon {
+  font-size: 0.72rem;
 }
 
 .product-card .rating {
@@ -719,6 +738,13 @@ tr.compare-best .compare-cta-cell {
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+
+.product-card .rating-number {
+  font-family: var(--font-data);
+  font-weight: 700;
+  color: var(--cream);
 }
 
 .product-card .stars {

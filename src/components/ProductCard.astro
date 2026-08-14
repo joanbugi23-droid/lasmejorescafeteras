@@ -65,11 +65,12 @@ const fullStars = starRating ? Math.round(starRating) : 0;
     {
       starRating && (
         <div class="rating" aria-label={`${starRating} de 5 estrellas`}>
+          <span class="rating-number">{starRating}</span>
           <span class="stars" aria-hidden="true">
             {"★".repeat(fullStars)}
             {"☆".repeat(5 - fullStars)}
           </span>
-          {reviewCount && <span class="review-count">({reviewCount})</span>}
+          {reviewCount && <span class="review-count">({reviewCount} opiniones)</span>}
         </div>
       )
     }
@@ -79,7 +80,12 @@ const fullStars = starRating ? Math.round(starRating) : 0;
       ) : price ? (
         <div class="price-row">
           <span class="price">{price}</span>
-          {previousPrice && <span class="price-before">{previousPrice}</span>}
+          {previousPrice && (
+            <span class="price-before-wrap">
+              <span class="price-before-label">Antes</span>
+              <span class="price-before">{previousPrice}</span>
+            </span>
+          )}
           {data?.provisional && <span class="provisional-note">precio provisional</span>}
         </div>
       ) : (
@@ -100,7 +106,16 @@ const fullStars = starRating ? Math.round(starRating) : 0;
         </div>
       )
     }
-    {available && data?.availabilityMessage && <div class="availability">{data.availabilityMessage}</div>}
+    {
+      available && data?.availabilityMessage && (
+        <div class="availability">
+          <span class="availability-icon" aria-hidden="true">
+            ✓
+          </span>
+          {data.availabilityMessage}
+        </div>
+      )
+    }
     <a class="cta cta-bottom" href={url} target="_blank" rel="nofollow sponsored noopener">
       Ver en Amazon
     </a>
