@@ -1,9 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
+import JsonLd from "../components/JsonLd.astro";
 import categories from "../data/categories.json";
 import tops from "../data/tops.json";
 import { loadCatalog, resolveItems, representativeImage, activeDeals, lastUpdatedLabel } from "../lib/catalog.mjs";
+import { itemListJsonLd } from "../lib/seo.mjs";
 
 const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
 const catalog = loadCatalog();
@@ -13,12 +15,19 @@ const top = resolveItems(catalog.top, catalog.items);
 const deals = activeDeals(catalog);
 const currentYear = new Date().getFullYear();
 const currentTop = tops.find((t) => t.year === currentYear) ?? tops[tops.length - 1];
+
+const topItemList = top.length > 0 ? itemListJsonLd(top, "Top Cafeteras") : null;
+const dealsItemList = deals.length > 0 ? itemListJsonLd(deals, "Ofertas del Mes") : null;
 ---
 
 <Base
-  title="Las Mejores Cafeteras | Guía de compra y precios actualizados"
-  description="Comparativas y recomendaciones de las mejores cafeteras italianas, express, superautomáticas, de grano y de cápsulas, con precios de Amazon actualizados automáticamente."
+  title="Las Mejores Cafeteras | Comparativas, Precios y Ofertas Reales"
+  description="Cuál es la mejor cafetera del mercado: comparativas de cafeteras italianas, express, superautomáticas, de grano, cápsulas y goteo, con precio, valoración y disponibilidad de Amazon actualizados a diario."
+  image={top[0]?.image}
 >
+  {topItemList && <JsonLd data={topItemList} />}
+  {dealsItemList && <JsonLd data={dealsItemList} />}
+
   <div class="container">
     <header class="page-hero">
       <h1>Las Mejores Cafeteras</h1>

@@ -15,9 +15,11 @@ interface Props {
   } | null;
   partnerTag: string;
   featured?: boolean;
+  badgeLabel?: string | null;
 }
 
-const { asin, data, partnerTag, featured = false } = Astro.props;
+const { asin, data, partnerTag, featured = false, badgeLabel = null } = Astro.props;
+const badge = badgeLabel ?? (featured ? "Recomendada" : null);
 
 const title = data?.title ?? "Cafetera disponible en Amazon";
 const image = data?.image ?? null;
@@ -32,7 +34,7 @@ const fullStars = starRating ? Math.round(starRating) : 0;
 ---
 
 <article class:list={["product-card", { "is-unavailable": !available }]}>
-  {featured && available && <span class="badge">Recomendada</span>}
+  {badge && available && <span class="badge">{badge}</span>}
   {discountPercent && <span class="badge badge-discount">-{discountPercent}%</span>}
   <div class="thumb">
     {image ? <img src={image} alt={title} loading="lazy" /> : <div class="thumb-empty" aria-hidden="true" />}

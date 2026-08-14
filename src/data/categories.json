@@ -15,6 +15,16 @@
       "No produce crema como una máquina de espresso.",
       "Puede dejar residuos si no se limpia bien.",
       "Funciona mejor con molienda específica, no cualquier tipo de café molido."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es la mejor cafetera italiana?",
+        "answer": "La mejor cafetera italiana depende de cuántas tazas necesites y de si tu vitrocerámica o inducción es compatible. Las de acero inoxidable suelen ser más duraderas. Arriba tienes las cafeteras italianas mejor valoradas en Amazon ahora mismo, con precio y disponibilidad actualizados a diario."
+      },
+      {
+        "question": "¿Es mejor una cafetera italiana que una express para casa?",
+        "answer": "Para el día a día en casa, la cafetera italiana es más económica y no necesita electricidad, aunque no produce la crema típica de una express. Si buscas algo más parecido al espresso de cafetería, una express o superautomática se ajusta mejor; si prefieres simplicidad y bajo coste, la italiana es la opción clásica."
+      }
     ]
   },
   {
@@ -33,6 +43,16 @@
       "Curva de aprendizaje: requiere práctica para hacer un buen espresso.",
       "Mantenimiento constante: hay que limpiar filtros y descalcificar.",
       "Ocupan más espacio en comparación con otras cafeteras."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es la mejor cafetera express?",
+        "answer": "La mejor cafetera express para la mayoría de personas es la que ofrece buena presión (9 bares o más), depósito de tamaño cómodo y vaporizador de leche si te gusta el cappuccino. Compara arriba las cafeteras express con mejor valoración y precio actualizado a diario."
+      },
+      {
+        "question": "¿Cafetera express de precio o cafetera profesional?",
+        "answer": "Una cafetera express doméstica de precio medio es suficiente para el día a día; solo merece la pena dar el salto a una semiprofesional si quieres ajustar manualmente la molienda, la presión y la temperatura como en una cafetería."
+      }
     ]
   },
   {
@@ -51,6 +71,16 @@
       "Menos control sobre la preparación que las manuales.",
       "Mantenimiento frecuente: necesitan limpieza y descalcificación regular.",
       "Tamaño grande: ocupan más espacio en la cocina."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es la mejor cafetera superautomática?",
+        "answer": "La mejor cafetera superautomática combina buena valoración, molinillo integrado silencioso y facilidad de limpieza. Arriba puedes comparar las superautomáticas mejor valoradas en Amazon con su precio actualizado."
+      },
+      {
+        "question": "¿Merece la pena una cafetera superautomática para casa?",
+        "answer": "Si bebes café a diario y quieres pulsar un botón sin complicarte con la molienda ni el prensado, sí: una superautomática ofrece más comodidad que una express, aunque tiene un precio inicial más alto y necesita descalcificarse con regularidad."
+      }
     ]
   },
   {
@@ -69,6 +99,16 @@
       "Mantenimiento frecuente: requieren limpieza de molinillos y circuitos.",
       "Curva de aprendizaje en modelos manuales.",
       "Más voluminosas: ocupan más espacio que otras cafeteras."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es la mejor cafetera de grano?",
+        "answer": "La mejor cafetera de grano es la que muele justo antes de preparar el café, con varios niveles de molienda para adaptarse a espresso, filtro o cafetera italiana. Consulta arriba las mejor valoradas ahora mismo, con precio real de Amazon."
+      },
+      {
+        "question": "¿Cafetera de grano o de cápsulas, cuál conviene más?",
+        "answer": "A largo plazo, una cafetera de grano suele salir más económica por taza y da un café más fresco, mientras que las de cápsulas ganan en rapidez y comodidad. Si bebes mucho café, la de grano amortiza mejor la inversión inicial."
+      }
     ]
   },
   {
@@ -87,6 +127,16 @@
       "Dependencia de las cápsulas de una marca concreta (salvo modelos compatibles).",
       "Generan más residuos que otros métodos.",
       "Menos margen de personalización del café."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es la mejor cafetera de cápsulas?",
+        "answer": "La mejor cafetera de cápsulas depende del formato que prefieras (Nespresso, Dolce Gusto, compatibles...) y de si buscas solo espresso o también bebidas con leche. Arriba tienes las cafeteras de cápsulas mejor valoradas en Amazon, con precio y disponibilidad actualizados."
+      },
+      {
+        "question": "¿Es buena una cafetera de cápsulas para casa?",
+        "answer": "Sí, es de las opciones más cómodas para el día a día: no hay que ajustar nada, el café está listo en segundos y ocupan poco espacio. A cambio, el coste por taza suele ser algo más alto que con café molido o en grano."
+      }
     ]
   },
   {
@@ -105,6 +155,16 @@
       "Menos control sobre la presión y la intensidad que en una express.",
       "Ocupan espacio en la encimera por la jarra y la placa calefactora.",
       "El filtro de papel hay que reponerlo (salvo modelos con filtro permanente)."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es la mejor cafetera de goteo?",
+        "answer": "La mejor cafetera de goteo es la que prepara varias tazas sin perder sabor, con jarra o placa que mantenga el café caliente. Compara arriba las cafeteras de goteo mejor valoradas en Amazon, con precio actualizado a diario."
+      },
+      {
+        "question": "¿Cuál es la mejor cafetera de goteo para casa?",
+        "answer": "Para casa, lo habitual es priorizar la capacidad (6-12 tazas) y que incluya apagado automático o placa calefactora. Es la opción más práctica si en casa se bebe café durante varias horas seguidas."
+      }
     ]
   },
   {
@@ -123,6 +183,16 @@
       "Requieren limpieza periódica para evitar que el café enrancie.",
       "Los modelos de cuchillas dan una molienda menos uniforme que los de muelas.",
       "Ocupan espacio adicional en la encimera."
+    ],
+    "faqs": [
+      {
+        "question": "¿Cuál es el mejor molinillo de café eléctrico?",
+        "answer": "El mejor molinillo eléctrico suele ser uno de muelas (no de cuchillas), porque ofrece una molienda más uniforme y varios niveles de grosor según el método de preparación. Arriba tienes los mejor valorados en Amazon ahora mismo, con precio actualizado."
+      },
+      {
+        "question": "¿Merece la pena un molinillo eléctrico para casa?",
+        "answer": "Si preparas café con cierta frecuencia, sí: moler justo antes de preparar mejora notablemente el aroma frente al café ya molido, y a la larga sale más económico que comprarlo molido de fábrica."
+      }
     ]
   }
 ]

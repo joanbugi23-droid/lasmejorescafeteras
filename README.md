@@ -72,6 +72,41 @@ año nuevo, añade una entrada nueva a ese archivo:
 { "year": 2027, "asins": ["B0XXXXXXXX", "..."] }
 ```
 
+## Rankings dentro de cada categoría
+
+Además del orden que da `SearchItems`, cada categoría calcula tres destacados
+con datos objetivos de la API (nunca una opinión editorial), en
+[`src/lib/catalog.mjs`](src/lib/catalog.mjs) función `categoryHighlights`:
+
+- **Mejor precio**: precio actual más bajo.
+- **Mejor calidad-precio**: mayor ratio valoración/precio.
+- **Más vendida**: `browseNodeInfo.websiteSalesRank` más bajo (lo calcula Amazon).
+
+## SEO y GEO
+
+- **Sitemap y robots**: `@astrojs/sitemap` genera `sitemap-index.xml` en cada
+  build; [`public/robots.txt`](public/robots.txt) lo referencia.
+- **Datos estructurados (Schema.org)**: `BreadcrumbList` en todas las páginas,
+  `ItemList` + `Product`/`Offer`/`AggregateRating` en categorías, Top y
+  portada, `FAQPage` donde hay preguntas frecuentes — ver
+  [`src/lib/seo.mjs`](src/lib/seo.mjs).
+- **FAQ por categoría**: 2 preguntas de cola larga por categoría (ej. "¿cuál
+  es la mejor cafetera de goteo para casa?"), en el campo `faqs` de
+  [`src/data/categories.json`](src/data/categories.json).
+- **GEO**: [`public/llms.txt`](public/llms.txt) describe la estructura del
+  sitio para motores de IA; cada página muestra cuándo se actualizaron los
+  precios por última vez (dato real, no escrito a mano).
+- **Meta tags**: `title`/`description` únicos por página, canonical URL, Open
+  Graph y Twitter Card (con la foto real del producto destacado cuando hay
+  datos) — en [`src/layouts/Base.astro`](src/layouts/Base.astro).
+
+**Pendiente de tu parte — Search Console / PageSpeed**: para verificar la
+propiedad del dominio en [Google Search Console](https://search.google.com/search-console)
+necesitas o bien añadir un registro TXT en el DNS (ahora en Cloudflare, es
+rápido) o pegar una etiqueta `<meta>` de verificación — en cuanto quieras
+hacerlo, dime y te la añado en `Base.astro`. [PageSpeed Insights](https://pagespeed.web.dev/)
+no necesita configuración: solo pegar la URL del sitio.
+
 ## Desarrollo local
 
 ```bash

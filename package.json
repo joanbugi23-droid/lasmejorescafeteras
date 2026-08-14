@@ -13,6 +13,7 @@
     "fetch-catalog": "node --env-file-if-exists=.env scripts/fetch-catalog.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.2.0"
   }
 }

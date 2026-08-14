@@ -1,8 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
+import JsonLd from "../../components/JsonLd.astro";
 import categories from "../../data/categories.json";
-import { loadCatalog, resolveItems, lastUpdatedLabel } from "../../lib/catalog.mjs";
+import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights } from "../../lib/catalog.mjs";
+import { breadcrumbJsonLd, itemListJsonLd, faqJsonLd } from "../../lib/seo.mjs";
 
 export function getStaticPaths() {
   return categories.map((cat) => ({
@@ -16,12 +18,26 @@ const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
 const catalog = loadCatalog();
 const categoryItems = resolveItems(catalog.categories[category.slug], catalog.items);
 const updatedLabel = lastUpdatedLabel(catalog.items);
+const highlights = categoryHighlights(categoryItems);
+const faqs = category.faqs ?? [];
+
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: category.shortTitle, path: `/${category.slug}/` },
+]);
+const itemList = categoryItems.length > 0 ? itemListJsonLd(categoryItems, category.title) : null;
+const faqSchema = faqs.length > 0 ? faqJsonLd(faqs) : null;
 ---
 
 <Base
   title={`${category.title}: Comparativa y Precios Actualizados`}
   description={category.intro}
+  image={categoryItems[0]?.image}
 >
+  <JsonLd data={breadcrumbs} />
+  {itemList && <JsonLd data={itemList} />}
+  {faqSchema && <JsonLd data={faqSchema} />}
+
   <div class="container">
     <nav class="breadcrumbs">
       <a href="/">Inicio</a> / {category.shortTitle}
@@ -36,7 +52,7 @@ const updatedLabel = lastUpdatedLabel(catalog.items);
       <div class="product-grid">
         {
           categoryItems.map((item) => (
-            <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} />
+            <ProductCard asin={item.asin} data={item} partnerTag={PARTNER_TAG} badgeLabel={highlights[item.asin]} />
           ))
         }
       </div>
@@ -60,6 +76,19 @@ const updatedLabel = lastUpdatedLabel(catalog.items);
           </ul>
         </div>
       </div>
+
+      {
+        faqs.length > 0 && (
+          <div class="faq-list">
+            {faqs.map((faq) => (
+              <details class="faq-item">
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        )
+      }
     </section>
   </div>
 </Base>

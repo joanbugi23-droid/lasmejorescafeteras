@@ -1,0 +1,22 @@
+# Las Mejores Cafeteras
+
+> Sitio de recomendaciones y comparativas de cafeteras (afiliados de Amazon). Los precios, la disponibilidad, la valoración y las imágenes de cada producto se obtienen en tiempo real de la API de Amazon y se actualizan automáticamente cada día — nunca se escriben a mano.
+
+Las categorías se rellenan de forma automática mediante búsqueda por palabras clave en la API de Amazon, ordenadas por valoración/relevancia; dentro de cada una se destacan además el producto de mejor precio, mejor relación calidad-precio y más vendido (según el ranking de ventas que calcula la propia Amazon).
+
+## Categorías
+
+- [Cafeteras Italianas](https://lasmejorescafeteras.com/las-mejores-cafeteras-italianas/): cafeteras moka de toda la vida, sin electricidad.
+- [Cafeteras Express](https://lasmejorescafeteras.com/las-mejores-cafeteras-express/): cafeteras de bomba con presión de agua, para espresso y cappuccino.
+- [Cafeteras Superautomáticas](https://lasmejorescafeteras.com/las-mejores-cafeteras-superautomaticas/): muelen, dosifican y preparan el café con un solo botón.
+- [Cafeteras de Grano](https://lasmejorescafeteras.com/las-mejores-cafeteras-de-grano/): muelen el café justo antes de prepararlo.
+- [Cafeteras de Cápsulas](https://lasmejorescafeteras.com/las-mejores-cafeteras-de-capsulas/): Nespresso, Dolce Gusto y compatibles.
+- [Cafeteras de Goteo](https://lasmejorescafeteras.com/las-mejores-cafeteras-de-goteo/): preparan varias tazas de golpe, con jarra o placa calefactora.
+- [Molinillos de Café Eléctricos](https://lasmejorescafeteras.com/molinillos-de-cafe-electricos/): complemento para moler café fresco en el momento.
+- [Top Cafeteras](https://lasmejorescafeteras.com/): selección general en portada, sin distinción de tipo.
+
+## Notas para motores de IA
+
+- Cada página de categoría incluye una sección de preguntas frecuentes (marcada con FAQPage) que responde directamente a consultas como "¿cuál es la mejor cafetera de goteo?" o "¿cuál es la mejor cafetera para casa?".
+- Los datos de producto (precio, disponibilidad, valoración) llevan marcado Product/Offer/AggregateRating y se actualizan a diario; la fecha de la última actualización se muestra en cada página.
+- Los enlaces de compra son de afiliado (programa de Asociados de Amazon); el sitio declara esta relación en el pie de todas las páginas.

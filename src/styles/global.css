@@ -252,6 +252,33 @@ a {
   margin-top: 20px;
 }
 
+.faq-list {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 760px;
+}
+
+.faq-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--coffee-800);
+}
+
+.faq-item p {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+
 .guide-links {
   display: flex;
   flex-wrap: wrap;

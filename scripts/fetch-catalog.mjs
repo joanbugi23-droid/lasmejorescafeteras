@@ -47,6 +47,7 @@ const RESOURCES = [
   "offersV2.listings.availability",
   "customerReviews.starRating",
   "customerReviews.count",
+  "browseNodeInfo.websiteSalesRank",
 ];
 
 function pick(obj, ...keys) {
@@ -129,6 +130,8 @@ function parseItem(item) {
   const savings = pick(price, "savings", "Savings");
   const savingBasis = pick(price, "savingBasis", "SavingBasis");
   const reviews = pick(item, "customerReviews", "CustomerReviews");
+  const browseNodeInfo = pick(item, "browseNodeInfo", "BrowseNodeInfo");
+  const salesRank = pick(browseNodeInfo, "websiteSalesRank", "WebsiteSalesRank");
 
   return {
     asin,
@@ -143,6 +146,7 @@ function parseItem(item) {
     availabilityMessage: pick(availability, "message", "Message", "type", "Type") ?? null,
     starRating: pick(reviews, "starRating", "StarRating") ?? null,
     reviewCount: pick(reviews, "count", "Count") ?? null,
+    salesRank: pick(salesRank, "salesRank", "SalesRank") ?? null,
     url: pick(item, "detailPageURL", "DetailPageURL") ?? `https://www.amazon.es/dp/${asin}?tag=${PARTNER_TAG}`,
     fetchedAt: new Date().toISOString(),
   };

@@ -43,6 +43,36 @@ export function activeDeals(catalog, limit = 5) {
     .slice(0, limit);
 }
 
+// Rankings objetivos dentro de una categoría, construidos solo con datos
+// reales de la API (nunca una opinión editorial):
+// - "Mejor precio": precio actual más bajo.
+// - "Mejor relación calidad-precio": mayor ratio valoración/precio.
+// - "Más vendida": websiteSalesRank más bajo (lo calcula la propia Amazon).
+// Cada producto recibe como mucho una etiqueta (más vendida > calidad-precio
+// > precio), para no saturar la tarjeta si coincide en varios criterios.
+export function categoryHighlights(items) {
+  const available = items.filter((item) => item.available);
+
+  const bestSeller = available
+    .filter((item) => item.salesRank != null)
+    .sort((a, b) => a.salesRank - b.salesRank)[0];
+
+  const bestValue = available
+    .filter((item) => item.priceAmount && item.starRating)
+    .sort((a, b) => b.starRating / b.priceAmount - a.starRating / a.priceAmount)[0];
+
+  const bestPrice = available
+    .filter((item) => item.priceAmount != null)
+    .sort((a, b) => a.priceAmount - b.priceAmount)[0];
+
+  const labels = {};
+  if (bestSeller) labels[bestSeller.asin] = "Más vendida";
+  if (bestValue && !labels[bestValue.asin]) labels[bestValue.asin] = "Mejor calidad-precio";
+  if (bestPrice && !labels[bestPrice.asin]) labels[bestPrice.asin] = "Mejor precio";
+
+  return labels;
+}
+
 // Texto relativo ("hoy", "ayer", "hace X días") a partir del dato más
 // reciente en cache. Se genera solo a partir de fetchedAt, nunca a mano.
 export function lastUpdatedLabel(items) {

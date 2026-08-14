@@ -1,8 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
+import JsonLd from "../../components/JsonLd.astro";
 import tops from "../../data/tops.json";
 import { loadCatalog, resolveItems, lastUpdatedLabel } from "../../lib/catalog.mjs";
+import { breadcrumbJsonLd, itemListJsonLd } from "../../lib/seo.mjs";
 
 export function getStaticPaths() {
   return tops.map((top) => ({
@@ -16,12 +18,22 @@ const PARTNER_TAG = import.meta.env.PUBLIC_PARTNER_TAG || "lasmejores03-21";
 const catalog = loadCatalog();
 const items = resolveItems(top.asins, catalog.items);
 const updatedLabel = lastUpdatedLabel(catalog.items);
+
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: `Top Cafeteras ${top.year}`, path: `/top-cafeteras-${top.year}/` },
+]);
+const itemList = items.length > 0 ? itemListJsonLd(items, `Top Cafeteras ${top.year}`) : null;
 ---
 
 <Base
   title={`Top Cafeteras ${top.year}: Las Más Recomendadas`}
   description={`Selección de las mejores cafeteras de ${top.year}, con precios y disponibilidad de Amazon actualizados automáticamente.`}
+  image={items[0]?.image}
 >
+  <JsonLd data={breadcrumbs} />
+  {itemList && <JsonLd data={itemList} />}
+
   <div class="container">
     <nav class="breadcrumbs">
       <a href="/">Inicio</a> / Top Cafeteras {top.year}

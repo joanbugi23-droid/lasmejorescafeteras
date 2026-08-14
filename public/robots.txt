@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lasmejorescafeteras.com/sitemap-index.xml
