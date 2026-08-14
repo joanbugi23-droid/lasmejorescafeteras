@@ -1,0 +1,30 @@
+---
+// Recreación vectorial del logo (gota/corazón con degradado sobre
+// insignia melocotón + wordmark). No es el archivo original del usuario
+// -- es un SVG dibujado a partir de la imagen que compartió, para poder
+// integrarlo sin depender de un asset externo.
+---
+
+<span class="brand-mark" aria-hidden="true">
+  <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+    <defs>
+      <linearGradient id="logoDrop" x1="50" y1="18" x2="50" y2="84" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#7c2c10" />
+        <stop offset="1" stop-color="#ea6b24" />
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="26" fill="#fdf1e6" />
+    <path
+      d="M50 80 C24 60 15 42 24 28 C31 18 44 19 50 32 C56 19 69 18 76 28 C85 42 76 60 50 80 Z"
+      stroke="url(#logoDrop)"
+      stroke-width="7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <circle cx="50" cy="56" r="5.5" fill="#ea6b24" />
+  </svg>
+</span>
+<span class="brand-word">
+  <span class="brand-eyebrow">Las Mejores</span>
+  <span class="brand-title">cafeteras<span class="brand-dot">.</span></span>
+</span>

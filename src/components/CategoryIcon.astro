@@ -1,0 +1,34 @@
+---
+// Iconos de línea, dibujados a mano (geometría simple, no fotos ni IA),
+// solo para diferenciar visualmente los botones de categoría del menú.
+// Las fotos reales de producto siguen siendo las que representan cada
+// cafetera en las tarjetas y tablas — esto es únicamente navegación.
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const paths: Record<string, string> = {
+  inicio: 'M2 8 8 2l6 6 M4 7v6h8V7',
+  "las-mejores-cafeteras-italianas": "M5 11 6 4h4l1 7 M4 14h8l-1-3H5l-1 3z M6 4h4l-1-2H7l-1 2z M12 6.5h1.5l-.8 1.8H12",
+  "las-mejores-cafeteras-express": "M3 3h10v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3z M5 10v1.5a2 2 0 0 0 4 0V10 M6 5.5h4",
+  "las-mejores-cafeteras-superautomaticas": "M3 2h10v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2z M5.5 4h3v2h-3z M6 10v2a2 2 0 0 0 4 0v-2",
+  "las-mejores-cafeteras-de-grano": "M8 2C4.5 2 2.5 5.5 2.5 8s2 6 5.5 6 5.5-4 5.5-6S11.5 2 8 2z M8 2.3c-1.6 2.2-1.6 9.2 0 11.4",
+  "las-mejores-cafeteras-de-capsulas": "M6 2h4l1 7.5a3 3 0 0 1-6 0L6 2z M5.3 4.5h5.4",
+  "las-mejores-cafeteras-de-goteo": "M4 5h8l-1 7.5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 5z M3 5h10 M11 7.5h1a1.2 1.2 0 0 1 1.2 1.2v.6A1.2 1.2 0 0 1 12 10.5h-1",
+  "molinillos-de-cafe-electricos": "M4.5 5.5h7v7.5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V5.5z M6.3 5.5V4a1.7 1.7 0 0 1 3.4 0v1.5",
+  top: "M8 2l1.8 3.6 4 .6-2.9 2.8.7 4L8 11.1l-3.6 1.9.7-4-2.9-2.8 4-.6L8 2z",
+  blog: "M4.5 2h5l2 2v10h-7z M9.5 2v2h2 M6 7h4 M6 9.5h4 M6 12h2.5",
+};
+
+const d = paths[slug] ?? null;
+---
+
+{
+  d && (
+    <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d={d} stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )
+}

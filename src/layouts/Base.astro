@@ -20,7 +20,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2226%22 fill=%22%23fdf1e6%22/><path d=%22M50 80C24 60 15 42 24 28C31 18 44 19 50 32C56 19 69 18 76 28C85 42 76 60 50 80Z%22 fill=%22none%22 stroke=%22%23c1440e%22 stroke-width=%229%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><circle cx=%2250%22 cy=%2256%22 r=%227%22 fill=%22%23ea6b24%22/></svg>"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Las Mejores Cafeteras" />

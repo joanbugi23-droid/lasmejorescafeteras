@@ -1,6 +1,8 @@
 ---
 import categories from "../data/categories.json";
 import tops from "../data/tops.json";
+import CategoryIcon from "./CategoryIcon.astro";
+import BrandLogo from "./BrandLogo.astro";
 
 const { pathname } = Astro.url;
 const latestTop = tops[tops.length - 1];
@@ -9,17 +11,20 @@ const latestTop = tops[tops.length - 1];
 <header class="site-header">
   <div class="container">
     <a class="brand" href="/">
-      <span class="cup">☕</span>
-      Las Mejores Cafeteras
+      <BrandLogo />
     </a>
     <nav class="main-nav" aria-label="Categorías de cafeteras">
-      <a href="/" aria-current={pathname === "/" ? "page" : undefined}>Inicio</a>
+      <a href="/" aria-current={pathname === "/" ? "page" : undefined}>
+        <CategoryIcon slug="inicio" />
+        Inicio
+      </a>
       {
         categories.map((cat) => (
           <a
             href={`/${cat.slug}/`}
             aria-current={pathname === `/${cat.slug}/` ? "page" : undefined}
           >
+            <CategoryIcon slug={cat.slug} />
             {cat.shortTitle}
           </a>
         ))
@@ -30,11 +35,15 @@ const latestTop = tops[tops.length - 1];
             href={`/top-cafeteras-${latestTop.year}/`}
             aria-current={pathname === `/top-cafeteras-${latestTop.year}/` ? "page" : undefined}
           >
+            <CategoryIcon slug="top" />
             Top {latestTop.year}
           </a>
         )
       }
-      <a href="/blog/" aria-current={pathname.startsWith("/blog/") ? "page" : undefined}>Blog</a>
+      <a href="/blog/" aria-current={pathname.startsWith("/blog/") ? "page" : undefined}>
+        <CategoryIcon slug="blog" />
+        Blog
+      </a>
     </nav>
   </div>
 </header>

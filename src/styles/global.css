@@ -96,19 +96,41 @@ a {
 
 .brand {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
-  color: var(--cream);
   white-space: nowrap;
 }
 
-.brand .cup {
-  font-size: 1.3rem;
-  color: var(--amber);
+.brand-mark {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.brand-word {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.brand-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c1440e;
+}
+
+.brand-title {
+  font-family: var(--font-body);
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--cream);
+}
+
+.brand-dot {
+  color: #ea6b24;
 }
 
 .main-nav {
@@ -119,24 +141,37 @@ a {
 }
 
 .main-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
   color: var(--text-muted);
   font-size: 0.85rem;
-  padding: 8px 12px;
+  font-weight: 600;
+  padding: 7px 13px;
   border-radius: 999px;
-  transition: background 0.15s ease, color 0.15s ease;
+  border: 1px solid var(--border);
+  background: var(--panel-alt);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
   white-space: nowrap;
 }
 
+.main-nav a .nav-icon {
+  flex-shrink: 0;
+}
+
 .main-nav a:hover {
-  background: var(--panel);
-  color: var(--cream);
+  background: #ffffff;
+  color: var(--amber);
+  border-color: var(--amber);
+  transform: translateY(-1px);
 }
 
 .main-nav a[aria-current="page"] {
   background: var(--amber);
   color: #ffffff;
-  font-weight: 600;
+  border-color: var(--amber);
+  font-weight: 700;
 }
 
 /* Compact page header (above the fold: action content, not long text) */
