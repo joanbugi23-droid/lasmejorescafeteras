@@ -5,6 +5,7 @@ import JsonLd from "../../components/JsonLd.astro";
 import categories from "../../data/categories.json";
 import { loadCatalog, resolveItems, lastUpdatedLabel, categoryHighlights } from "../../lib/catalog.mjs";
 import { breadcrumbJsonLd, itemListJsonLd, faqJsonLd } from "../../lib/seo.mjs";
+import { getCollection } from "astro:content";
 
 export function getStaticPaths() {
   return categories.map((cat) => ({
@@ -20,6 +21,9 @@ const categoryItems = resolveItems(catalog.categories[category.slug], catalog.it
 const updatedLabel = lastUpdatedLabel(catalog.items);
 const highlights = categoryHighlights(categoryItems);
 const faqs = category.faqs ?? [];
+const relatedPosts = (await getCollection("blog")).filter(
+  (post) => post.data.relatedCategory === category.slug
+);
 
 const breadcrumbs = breadcrumbJsonLd([
   { name: "Inicio", path: "/" },
@@ -87,6 +91,18 @@ const faqSchema = faqs.length > 0 ? faqJsonLd(faqs) : null;
               </details>
             ))}
           </div>
+        )
+      }
+
+      {
+        relatedPosts.length > 0 && (
+          <ul class="guide-links" style="margin-top: 20px;">
+            {relatedPosts.map((post) => (
+              <li>
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              </li>
+            ))}
+          </ul>
         )
       }
     </section>

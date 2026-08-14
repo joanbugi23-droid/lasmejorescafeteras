@@ -1,0 +1,67 @@
+---
+import Base from "../../../layouts/Base.astro";
+import JsonLd from "../../../components/JsonLd.astro";
+import categories from "../../../data/categories.json";
+import { getCollection, render } from "astro:content";
+import { breadcrumbJsonLd } from "../../../lib/seo.mjs";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const relatedCategory = categories.find((c) => c.slug === post.data.relatedCategory);
+
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: "Blog", path: "/blog/" },
+  { name: post.data.title, path: `/blog/${post.id}/` },
+]);
+
+const formatter = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" });
+---
+
+<Base title={`${post.data.title} | Blog`} description={post.data.description}>
+  <JsonLd
+    data={{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.data.title,
+      description: post.data.description,
+      datePublished: post.data.pubDate.toISOString(),
+    }}
+  />
+  <JsonLd data={breadcrumbs} />
+
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Inicio</a> / <a href="/blog/">Blog</a> / {post.data.title}
+    </nav>
+
+    <article class="blog-post">
+      <header class="page-hero">
+        <h1>{post.data.title}</h1>
+      </header>
+      <p class="blog-date">Publicado el {formatter.format(post.data.pubDate)}</p>
+
+      <div class="blog-content">
+        <Content />
+      </div>
+
+      {
+        relatedCategory && (
+          <p class="blog-cta">
+            <a href={`/${relatedCategory.slug}/`}>
+              Ver {relatedCategory.title.toLowerCase()} con precio actualizado →
+            </a>
+          </p>
+        )
+      }
+    </article>
+  </div>
+</Base>

@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { getCollection } from "astro:content";
+import { breadcrumbJsonLd } from "../../lib/seo.mjs";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: "Blog", path: "/blog/" },
+]);
+
+const formatter = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" });
+---
+
+<Base
+  title="Blog: Guías y Comparativas de Cafeteras"
+  description="Guías originales para elegir cafetera: grano vs cápsulas, cafetera de precio vs profesional, cafeteras italianas de acero inoxidable y más, con datos reales de Amazon."
+>
+  <JsonLd data={breadcrumbs} />
+
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Inicio</a> / Blog
+    </nav>
+
+    <header class="page-hero">
+      <h1>Guías y Comparativas de Cafeteras</h1>
+    </header>
+
+    <section class="section" style="padding-top: 6px;">
+      <div class="blog-list">
+        {
+          posts.map((post) => (
+            <a class="blog-card" href={`/blog/${post.id}/`}>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.description}</p>
+              <span class="blog-date">{formatter.format(post.data.pubDate)}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</Base>
