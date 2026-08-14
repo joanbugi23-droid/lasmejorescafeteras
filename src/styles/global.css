@@ -18,6 +18,7 @@
   --rust-soft: #d1382c;
   --ok: #1d7a4c;
   --star: #f5a623;
+  --price: #c1440e;
 
   --font-display: Georgia, "Iowan Old Style", "Noto Serif", "Times New Roman", serif;
   --font-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -85,13 +86,6 @@ a {
   gap: 6px 16px;
   padding-top: 14px;
   padding-bottom: 14px;
-}
-
-@media (max-width: 720px) {
-  .main-nav {
-    justify-content: flex-start;
-    width: 100%;
-  }
 }
 
 .brand {
@@ -172,6 +166,29 @@ a {
   color: #ffffff;
   border-color: var(--amber);
   font-weight: 700;
+}
+
+/* Movil: carrusel horizontal de chips en vez de partirse en varias filas */
+@media (max-width: 720px) {
+  .main-nav {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 24px), transparent);
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main-nav a {
+    flex-shrink: 0;
+  }
 }
 
 /* Compact page header (above the fold: action content, not long text) */
@@ -653,6 +670,16 @@ tr.compare-best .compare-cta-cell {
   gap: 20px;
 }
 
+/* Mobile-first: por debajo de 480px, siempre 1 sola columna, nunca varias
+   tarjetas apretadas -- prioridad absoluta porque la mayoria del trafico
+   es movil. */
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
 .product-card {
   position: relative;
   background: var(--panel);
@@ -740,17 +767,20 @@ tr.compare-best .compare-cta-cell {
   padding: 16px 18px 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   flex: 1;
 }
 
 .product-card h3 {
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0;
   line-height: 1.35;
-  min-height: 2.6em;
   color: var(--cream);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-card h3 a {
@@ -772,9 +802,9 @@ tr.compare-best .compare-cta-cell {
 .product-card .price {
   font-family: var(--font-data);
   font-variant-numeric: tabular-nums;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--cream);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--price);
   animation: price-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
@@ -901,24 +931,18 @@ tr.compare-best .compare-cta-cell {
 }
 
 .product-card .cta {
-  display: inline-block;
+  display: block;
+  width: 100%;
   text-align: center;
   background: var(--amber);
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
-  padding: 10px 14px;
+  padding: 13px 14px;
   border-radius: 9px;
-  font-size: 0.9rem;
-  transition: background 0.15s ease, transform 0.15s ease;
-}
-
-.product-card .cta.cta-top {
-  margin: 2px 0 0;
-}
-
-.product-card .cta.cta-bottom {
+  font-size: 0.95rem;
   margin-top: auto;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .product-card .cta:hover {

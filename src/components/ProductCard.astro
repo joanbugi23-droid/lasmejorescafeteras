@@ -56,25 +56,6 @@ const fullStars = starRating ? Math.round(starRating) : 0;
       </a>
     </h3>
     {
-      available && (
-        <a class="cta cta-top" href={url} target="_blank" rel="nofollow sponsored noopener">
-          Ver en Amazon
-        </a>
-      )
-    }
-    {
-      starRating && (
-        <div class="rating" aria-label={`${starRating} de 5 estrellas`}>
-          <span class="rating-number">{starRating}</span>
-          <span class="stars" aria-hidden="true">
-            {"★".repeat(fullStars)}
-            {"☆".repeat(5 - fullStars)}
-          </span>
-          {reviewCount && <span class="review-count">({reviewCount} opiniones)</span>}
-        </div>
-      )
-    }
-    {
       !available ? (
         <div class="price unavailable">No disponible actualmente</div>
       ) : price ? (
@@ -88,8 +69,18 @@ const fullStars = starRating ? Math.round(starRating) : 0;
           )}
           {data?.provisional && <span class="provisional-note">precio provisional</span>}
         </div>
-      ) : (
-        <div class="price unavailable">Ver precio actual en Amazon</div>
+      ) : null
+    }
+    {
+      starRating && (
+        <div class="rating" aria-label={`${starRating} de 5 estrellas`}>
+          <span class="rating-number">{starRating}</span>
+          <span class="stars" aria-hidden="true">
+            {"★".repeat(fullStars)}
+            {"☆".repeat(5 - fullStars)}
+          </span>
+          {reviewCount && <span class="review-count">({reviewCount} opiniones)</span>}
+        </div>
       )
     }
     {
@@ -116,7 +107,7 @@ const fullStars = starRating ? Math.round(starRating) : 0;
         </div>
       )
     }
-    <a class="cta cta-bottom" href={url} target="_blank" rel="nofollow sponsored noopener">
+    <a class="cta" href={url} target="_blank" rel="nofollow sponsored noopener">
       Ver en Amazon
     </a>
   </div>
