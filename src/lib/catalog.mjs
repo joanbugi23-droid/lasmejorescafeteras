@@ -1,26 +1,20 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const CATALOG_PATH = path.join(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../data/catalog.generated.json"
-);
+// Import estático (como el resto de src/data/*.json) en vez de leer el
+// archivo con fs en tiempo de ejecución: con fs + ruta calculada desde
+// import.meta.url, el dev server funcionaba pero el build estático de Astro
+// (que empaqueta este módulo de forma distinta) resolvía la ruta mal y
+// generaba páginas sin productos. El import lo resuelve Vite en build time
+// y funciona igual en dev y en build.
+import catalogData from "../data/catalog.generated.json";
 
 // Cache persistente generada por scripts/fetch-catalog.mjs: productos
 // (por ASIN), y las listas de ASINs elegidas por categoría / top / ofertas.
 export function loadCatalog() {
-  try {
-    const data = JSON.parse(readFileSync(CATALOG_PATH, "utf8"));
-    return {
-      items: data.items ?? {},
-      categories: data.categories ?? {},
-      top: data.top ?? [],
-      deals: data.deals ?? [],
-    };
-  } catch {
-    return { items: {}, categories: {}, top: [], deals: [] };
-  }
+  return {
+    items: catalogData.items ?? {},
+    categories: catalogData.categories ?? {},
+    top: catalogData.top ?? [],
+    deals: catalogData.deals ?? [],
+  };
 }
 
 // Resuelve una lista de ASINs a sus datos completos, en el mismo orden,
