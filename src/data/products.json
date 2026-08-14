@@ -1,3 +1,27 @@
 [
-  { "asin": "B0GNMS31J4", "category": "las-mejores-cafeteras-superautomaticas" }
+  { "asin": "B0GNMS31J4", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B0BWSFGQ49", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B0CDCFH17J", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B0FT978WSL", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B00UTJQLZK", "category": "las-mejores-cafeteras-superautomaticas" },
+  { "asin": "B00MZ2F3Z8", "category": "las-mejores-cafeteras-superautomaticas" },
+
+  { "asin": "B0CG6FZZGX", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B0DHD6X9GP", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B00G5YOVZA", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B0DKJMQM76", "category": "las-mejores-cafeteras-de-capsulas" },
+  { "asin": "B09B166BMD", "category": "las-mejores-cafeteras-de-capsulas" },
+
+  { "asin": "B07MMSHC4R", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B0DFCSXC1S", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B07B2X1VXZ", "category": "las-mejores-cafeteras-de-grano" },
+  { "asin": "B0DFWRHZ7L", "category": "las-mejores-cafeteras-de-grano" },
+
+  { "asin": "B06WGTZ874", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B085J8LBXF", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B0BQ1TCC6F", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B06WD7Z8GD", "category": "las-mejores-cafeteras-express" },
+  { "asin": "B082DP67BT", "category": "las-mejores-cafeteras-express" },
+
+  { "asin": "B0BNJN4W2G", "category": "las-mejores-cafeteras-de-goteo" }
 ]
