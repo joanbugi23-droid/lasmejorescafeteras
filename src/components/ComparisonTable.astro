@@ -42,8 +42,8 @@ function scoreOutOf100(starRating?: number | null) {
             <th scope="col">Producto</th>
             <th scope="col">Puntuación</th>
             <th scope="col">Precio</th>
-            <th scope="col">Destaca por</th>
-            <th scope="col" />
+            <th scope="col" class="compare-destaca">Destaca por</th>
+            <th scope="col" class="compare-cta-col" />
           </tr>
         </thead>
         <tbody>
@@ -84,8 +84,8 @@ function scoreOutOf100(starRating?: number | null) {
                 <td>
                   {item.available === false ? "No disponible" : item.price ?? "Ver en Amazon"}
                 </td>
-                <td>{highlight ?? "—"}</td>
-                <td>
+                <td class="compare-destaca">{highlight ?? "—"}</td>
+                <td class="compare-cta-cell">
                   <a class="cta compare-cta" href={url} target="_blank" rel="nofollow sponsored noopener">
                     Ver en Amazon
                   </a>

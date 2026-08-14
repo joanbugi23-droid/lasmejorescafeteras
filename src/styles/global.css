@@ -407,6 +407,31 @@ a {
   background: var(--amber-soft);
 }
 
+/* La columna del botón es la que convierte: se fija a la derecha del
+   scroll horizontal para que nunca quede cortada, aunque la tabla no
+   quepa entera en pantalla. */
+.compare-cta-cell,
+.compare-cta-col {
+  position: sticky;
+  right: 0;
+  background: var(--panel);
+  box-shadow: -8px 0 8px -8px rgba(26, 26, 26, 0.18);
+}
+
+.compare-table thead .compare-cta-col {
+  z-index: 2;
+}
+
+tr.compare-best .compare-cta-cell {
+  background: var(--panel-2);
+}
+
+@media (max-width: 560px) {
+  .compare-destaca {
+    display: none;
+  }
+}
+
 /* Guía final (texto largo, siempre al fondo de la página) */
 .guide-section {
   border-top: 1px solid var(--border);
