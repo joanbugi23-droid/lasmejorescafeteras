@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+import categories from "../data/categories.json";
+---
+
+<Base
+  title="Página no encontrada | Las Mejores Cafeteras"
+  description="La página que buscas no existe o se ha movido. Consulta nuestras comparativas de cafeteras actualizadas."
+>
+  <div class="container">
+    <section class="section" style="text-align:center; padding: 70px 0;">
+      <p class="eyebrow">Error 404</p>
+      <h1 style="font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0 0 14px;">
+        Esta página no existe
+      </h1>
+      <p class="section-lead" style="margin: 0 auto 30px;">
+        Puede que el enlace esté roto o que la página se haya movido. Prueba desde aquí:
+      </p>
+      <ul class="guide-links" style="justify-content:center;">
+        <li><a href="/">Volver al inicio</a></li>
+        {categories.map((cat) => (
+          <li><a href={`/${cat.slug}/`}>{cat.shortTitle}</a></li>
+        ))}
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </section>
+  </div>
+</Base>
